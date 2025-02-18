@@ -1,0 +1,103 @@
+:root{
+    --primary-color: #002144;
+    --bg-gray:  #d9d9d9;
+    --border-gray: #ccc
+
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body{
+    background-color: var(--bg-gray);
+    height: 100vh;
+    width: 100vw;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    display: flex;
+}
+
+
+.main {
+    display: flex;
+    
+
+    .formularioLogin{
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color:  #1f1f2b;
+        flex: 1;
+        width: 50vw;
+        height: 100vh;
+        padding: 20px;
+
+        header{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            .linkCriarConta{
+                font-size: 10px;
+            }
+        }
+
+        .maisAcessos{
+            display: flex;
+            
+
+        }
+        
+
+        .formulario{
+            gap: 10px;
+            width: 60%;
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column; 
+
+
+            input::placeholder {
+                color: rgb(255, 255, 255); 
+                opacity: 1;
+                background-color:  #1f1f2b;
+            }
+              
+            input {
+                background-color:  #1f1f2b;
+                border: none; /* Remove todas as bordas */
+                border-bottom: 2px solid rgb(255, 255, 255); /* Adiciona apenas a borda inferior */
+                padding: 5px; /* Ajusta o espaçamento interno */
+                outline: none; /* Remove o contorno ao clicar */
+                color: #fff;
+            }
+            
+
+            button, .text{
+                width: 100%;
+                height: 33px;
+                border-radius: 2px;
+
+            }
+
+            button{
+                border: none; /* Remove todas as bordas */
+
+            }
+
+
+        }
+
+        .carroselLogin{
+            background-color:  #686868;
+            width: 50vw;
+            height: 100vh;
+        }
+    }
+}
