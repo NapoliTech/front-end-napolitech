@@ -142,37 +142,58 @@ button, .text {
     border-radius: 2px;
 }
 
-
 .carroselLogin {
-    background-color: var(--bg-gray); /* Define o fundo como branco */
-    width: 50vw;
+    overflow: hidden;
+    position: relative;
+    width: 50vw; /* Ajusta a largura para 50% da tela */
     height: 100vh;
     transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
 
 .carroselImgs {
     display: flex;
-    flex-direction: column;
-    height: 100vh;
-    width: 100%;
+    transition: transform 0.5s ease-in-out;
+    width: 300%; /* 100% por cada imagem */
 }
 
 .cardImgs {
+    flex: 1;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     height: 100vh;
     width: 100%;
+    padding: 10px;
 }
 
 .imgs {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Faz com que a imagem preencha a div pai sem estourar as bordas */
-    background-size: cover;
-    background-position: bottom; /* Posiciona a imagem de forma que a parte inferior fique cortada */
-    background-repeat: no-repeat;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.carousel-button.prev {
+    right: 45%;
+}
+
+.carousel-button.next {
+    left: 45%;
+}
+
+.prev-img {
+    transform: rotate(180deg);
+    
 }
 
 .checkbox-container {
@@ -184,8 +205,6 @@ button, .text {
 .checkbox-container input[type="checkbox"] {
     margin: 0;
 }
-
-
 
 .formularios {
     color: var(--primary-color); /* Define a cor do texto */
@@ -213,7 +232,6 @@ button, .text {
 .block{
     display: flex;
 }
-
 
 .formularios {
     transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
