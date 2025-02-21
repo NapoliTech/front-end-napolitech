@@ -8,33 +8,62 @@
 </head>
 <body>
     <main class="main">
-        <section class="formularioLogin">
+        
+        <section class="formularios formularioLogin" id="formularioLogin">
             <header>
-
-                <h2>Bem vindo de volta!!</h2>
-                <h3  class="linkCriarConta">Nâo possui uma conta? <a href=""><span>Criar conta</span></a></h3>
+                <h1>Bem vindo de volta!!</h1>
+                <h2 class="linkCriarConta">Não possui uma conta? <a href="#" id="criarContaLink"><span>Criar conta</span></a></h2>
             </header>
             
-            <form action="" class="formulario">    
-            
-            <input type="text"class="text"  placeholder="Email">
-            <input type="text" class="text" placeholder="Senha">
-            <input type="checkbox" class="check">
-            <button class="bttEntrar">Entrar</button>
-            
+            <form action="" class="formulario" id="formulario">    
+                <input type="text" class="text" placeholder="Email">
+                <input type="text" class="text" placeholder="Senha">
+                <div class="checkbox-container">
+                    <input type="checkbox" id="lembrarMe" class="check">
+                    <label for="lembrarMe" id="lembrarME">Lembrar me</label>
+                </div>
+                <button class="btt"><h1>38</h1></button>
             </form>
             <div class="separar">
                 <span>Ou</span>
             </div>
             <button class="bttGoogle">Login com Google</button>
-            
-
         </section>
-        <section class="carroselLogin">
+        <section class="carroselLogin" id="carroselLogin">
             <div class="carroselImgs"> 
-                
+                <div class="cardImgs">
+                    <img src="img/oferta_pizza_login_cadastro.png" alt="" class="imgs">
+                </div>
             </div>
         </section>
+
+        <section class="formularios formularioCadastro" id="formularioCadastro">
+            <header>
+                <h1>Criar Conta</h1>
+                <h2 class="linkCriarConta">Já possui uma conta? <a href="#" id="loginLink"><span>Entrar</span></a></h2>
+            </header>
+            
+            <form action="" class="formulario" id="formularioCadastroForm">    
+                <div id="parte1">
+                    <input type="text" class="text" placeholder="Nome">
+                    <input type="email" class="text" placeholder="Email">
+                    <input type="date" class="text" placeholder="Data de Nascimento">
+                    <button type="button" class="btt" id="continuarCadastro">Continuar</button>
+                </div>
+                <div id="parte2" class="hidden">
+                    <input type="text" class="text" placeholder="CPF">
+                    <input type="password" class="text" placeholder="Senha">
+                    <input type="password" class="text" placeholder="Confirmar Senha">
+                    <input type="tel" class="text" placeholder="Telefone">
+                    <button class="btt">Criar Conta</button>
+                </div>
+            </form>
+            <div class="separar">
+                <span>Ou</span>
+            </div>
+            <button class="bttGoogle">Login com Google</button>
+        </section>
     </main>
+    <script src="script.js"></script>
 </body>
 </html>
