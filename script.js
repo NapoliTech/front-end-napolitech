@@ -1,72 +1,97 @@
-const continuarCadastro = document.getElementById('continuarCadastro');
-const parte1 = document.getElementById('parte1');
-const parte2 = document.getElementById('parte2');
+import { errorCampo, limparCampos } from './globalFunction.js';
+let  dadosLogin = {
+    email: '',
+    senha: ''   
+};
 
-continuarCadastro.addEventListener('click', function() {
-    parte1.classList.add('hidden');
-    parte2.classList.remove('hidden');
-});
+// const bttcontinuarCadastro = document.getElementById('bttcontinuarCadastro');
+// const parte1 = document.getElementById('parte1');
+// const parte2 = document.getElementById('parte2');
+// const bttEntrar = document.getElementById('bttEntrar');
 
-function animacaoTelas(){
-    const formularioLogin = document.getElementById('formularioLogin');
-    const carroselLogin = document.getElementById('carroselLogin');
-    const formularioCadastro = document.getElementById('formularioCadastro');
+// bttcontinuarCadastro.addEventListener('click', (e)=> {  
+//     e.preventDefault();
+//     validacaoCadastro();
+//     })
 
-    document.getElementById('criarContaLink').addEventListener('click', function(event) {
-        event.preventDefault();
-        if(formularioLogin.classList.contains('slide-in-right')){
-            formularioLogin.classList.remove('slide-in-right');
-        }
-        formularioLogin.classList.add('slide-out-left');
-        carroselLogin.classList.add('slide-out-left');
-        setTimeout(function() {
-            carroselLogin.classList.remove('slide-out-left');
-            formularioLogin.classList.add('hidden');
-            formularioLogin.classList.remove('block');
-            formularioCadastro.classList.add('block');
-            formularioCadastro.classList.add('slide-in-right');
-            formularioCadastro.classList.remove('slide-out-right');
-            carroselLogin.classList.add('slide-in-right');
-            carroselLogin.classList.remove('slide-in-right');
-        }, 600); // Tempo da animação
-    });
+
+function carrossel(){
+
+
+    let currentIndex = 0;
+    const images = document.querySelectorAll('.carroselImgs .cardImgs');
+    const totalImages = images.length;
+
+    function showNextImage() {
+        currentIndex = (currentIndex + 1) % totalImages;
+        const offset = -currentIndex * 100 / totalImages;
+        document.querySelector('.carroselImgs').style.transform = `translateX(${offset}%)`;
+    }
+
+    function showPrevImage() {
+        currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+        const offset = -currentIndex * 100 / totalImages;
+        document.querySelector('.carroselImgs').style.transform = `translateX(${offset}%)`;
+    }
+
+    document.getElementById('nextButton').addEventListener('click', showNextImage);
+    document.getElementById('prevButton').addEventListener('click', showPrevImage);
+
+    setInterval(showNextImage, 3000);
+}
+
+
+
+
+
+
+
+bttEntrar.addEventListener('click', (e)=> {
+    e.preventDefault();
+    validacaoFormulario(); 
+    console.log(dadosLogin);
+})
+
+
+
+
+
+
+function validacaoFormulario(){
+    let emailFormulario = document.getElementById('email').value;
+    let senhaFormulario = document.getElementById('senha').value;
     
-    document.getElementById('loginLink').addEventListener('click', function(event) {
-        event.preventDefault();
-        formularioCadastro.classList.add('slide-out-right');
-        carroselLogin.classList.add('slide-out-right');
+
+    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let senhaRegex = /(?=.*[A-Z])(?=.*[!@#$%^&*])/;
+
+    if(emailFormulario == ''){
+        errorCampo(email, spanEmail, 'Preencha o campo email');
+    } else if(!emailRegex.test(emailFormulario)){
+        errorCampo(email, spanEmail, 'Preencha um email válido');
+    } 
+    else if(senhaFormulario == ''){
+        errorCampo(senha, spanSenha, 'Preencha o campo senha');
+    } else if(senhaFormulario.length < 6){
+        errorCampo(senha, spanSenha, 'A senha deve ter no mínimo 6 caracteres');
+    }else if(!senhaRegex.test(senhaFormulario)){
+        errorCampo(senha, spanSenha, 'A senha deve ter pelo menos uma letra maiúscula e um caractere especial');
+    } 
+    else{
+        limparCampos()
         
-        setTimeout(function() {
-            carroselLogin.classList.remove('slide-out-right');
-            formularioCadastro.classList.remove('block');
-            formularioCadastro.classList.add('hidden');
-            formularioLogin.classList.add('block');
-            formularioLogin.classList.remove('slide-out-left');
-            formularioLogin.classList.remove('hidden');
-        }, 600); // Tempo da animação
-    });
+        return dadosLogin = {
+            email: emailFormulario,
+            senha: senhaFormulario
+        };
+    }
+
+        
 }
 
-animacaoTelas();
 
-// Carrossel de imagens
-let currentIndex = 0;
-const images = document.querySelectorAll('.carroselImgs .cardImgs');
-const totalImages = images.length;
 
-function showNextImage() {
-    currentIndex = (currentIndex + 1) % totalImages;
-    const offset = -currentIndex * 100 / totalImages;
-    document.querySelector('.carroselImgs').style.transform = `translateX(${offset}%)`;
-}
 
-function showPrevImage() {
-    currentIndex = (currentIndex - 1 + totalImages) % totalImages;
-    const offset = -currentIndex * 100 / totalImages;
-    document.querySelector('.carroselImgs').style.transform = `translateX(${offset}%)`;
-}
 
-document.getElementById('nextButton').addEventListener('click', showNextImage);
-document.getElementById('prevButton').addEventListener('click', showPrevImage);
+carrossel();
 
-setInterval(showNextImage, 3000); // Troca de imagem a cada 3 segundos

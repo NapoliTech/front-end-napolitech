@@ -224,10 +224,6 @@ button, .text {
     display: none;
 }
 
-.formularioCadastro{
-    display:none;
-    
-}
 
 .block{
     display: flex;
