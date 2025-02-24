@@ -1,4 +1,5 @@
-import { errorCampo, limparCampos } from './globalFunction.js';
+import { errorCampo, limparCampos, carrossel } from '../globalFunction.js';
+import { registrar} from '../UsuarioController/usuarioController.js';
 
 let dadosCadastro = {
     nome: '',
@@ -10,7 +11,6 @@ let dadosCadastro = {
     telefone: ''
 };
 
-// Elementos do DOM
 const nomeFormCadastroForm = document.getElementById('nomeFormCadastro');
 const bttcontinuarCadastro = document.getElementById('bttcontinuarCadastro');
 const parte1 = document.getElementById('parte1');
@@ -18,7 +18,6 @@ const parte2 = document.getElementById('parte2');
 const bttEntrar = document.getElementById('bttEntrar');
 const bttCriarConta = document.getElementById('bttCriarConta');
 
-// Event Listeners
 bttcontinuarCadastro.addEventListener('click', (e) => {
     e.preventDefault();
     validacaoCadastro();
@@ -29,31 +28,7 @@ bttCriarConta.addEventListener('click', (e) => {
     validacaoCadastro2();
 });
 
-// Função para o carrossel de imagens
-function carrossel() {
-    let currentIndex = 0;
-    const images = document.querySelectorAll('.carroselImgs .cardImgs');
-    const totalImages = images.length;
 
-    function showNextImage() {
-        currentIndex = (currentIndex + 1) % totalImages;
-        const offset = -currentIndex * 100 / totalImages;
-        document.querySelector('.carroselImgs').style.transform = `translateX(${offset}%)`;
-    }
-
-    function showPrevImage() {
-        currentIndex = (currentIndex - 1 + totalImages) % totalImages;
-        const offset = -currentIndex * 100 / totalImages;
-        document.querySelector('.carroselImgs').style.transform = `translateX(${offset}%)`;
-    }
-
-    document.getElementById('nextButton').addEventListener('click', showNextImage);
-    document.getElementById('prevButton').addEventListener('click', showPrevImage);
-
-    setInterval(showNextImage, 3000);
-}
-
-// Função de validação do formulário de cadastro - Parte 1
 function validacaoCadastro() {
     const nomeCadastro = document.getElementById('nomeFormCadastro');
     const emailCadastro = document.getElementById('emailCadastro');
@@ -77,7 +52,8 @@ function validacaoCadastro() {
     } else {
         limparCampos();
         parte1.style.display = 'none';
-        parte2.style.display = 'block';
+        parte2.style.display = 'flex';
+        parte2.classList.add('formularioFormatado');
         bttcontinuarCadastro.style.display = 'none';
         dadosCadastro.nome = nomeCadastro.value;
         dadosCadastro.email = emailCadastro.value;
@@ -86,14 +62,12 @@ function validacaoCadastro() {
     }
 }
 
-// Função de validação do formulário de cadastro - Parte 2
 function validacaoCadastro2() {
     const cpfCadastro = document.getElementById('cpfCadastro');
     const senhaCadastro = document.getElementById('senhaCadastro');
     const confirmarSenhaCadastro = document.getElementById('confirmarSenhaCadastro');
     const telefoneCadastro = document.getElementById('telefoneCadastro');
 
-    // Remove todos os caracteres não numéricos do CPF
     const cpfLimpo = cpfCadastro.value.replace(/\D/g, '');
 
     if (cpfLimpo === '') {
@@ -119,17 +93,17 @@ function validacaoCadastro2() {
         dadosCadastro.cpf = cpfLimpo;
         dadosCadastro.senha = senhaCadastro.value;
         dadosCadastro.telefone = telefoneCadastro.value;
+
         console.log(dadosCadastro);
+        registrar(dadosCadastro);
     }
 }
 
-// Função para validar a data de nascimento
 function isValidDate(dateString) {
     const date = new Date(dateString);
     return !isNaN(date.getTime());
 }
 
-// Função para verificar se o usuário é maior de 18 anos
 function isAdult(dateString) {
     const date = new Date(dateString);
     const ageDifMs = Date.now() - date.getTime();
@@ -137,7 +111,6 @@ function isAdult(dateString) {
     return Math.abs(ageDate.getUTCFullYear() - 1970) >= 18;
 }
 
-// Função para validar o CPF
 function isValidCPF(cpf) {
     if (typeof cpf !== "string") return false;
     cpf = cpf.replace(/[\s.-]*/igm, '');
@@ -164,6 +137,9 @@ function isValidCPF(cpf) {
     return true;
 }
 
+// document.addEventListener('DOMContentLoaded', () => {
+//     document.body.classList.add('slide-in-right');
+// });
 
 carrossel();
 
