@@ -1,6 +1,5 @@
 
-npm install json-server --save-dev
-
+npm install
 npm run s
 
 
