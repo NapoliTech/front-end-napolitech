@@ -1,14 +1,3 @@
 {
-  "users": [
-    {
-      "id": "2c19",
-      "nome": "alejandro",
-      "email": "alejandro.fadim@sptech.school",
-      "dataNascimento": "20003-10-25",
-      "cpf": "05976497233",
-      "senha": "A@12345678",
-      "confirmarSenha": "",
-      "telefone": "05976497233"
-    }
-  ]
+  "users": []
 }
