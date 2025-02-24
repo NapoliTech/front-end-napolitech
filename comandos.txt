@@ -1,0 +1,8 @@
+Inicie o JSON-SERVER apontando para o arquivo db.json. No terminal, execute o seguinte comando:
+
+json-server --watch db.json --port 3000
+
+
+ver os usuarios cadastrados
+
+curl http://localhost:3000/users

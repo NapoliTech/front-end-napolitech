@@ -1,10 +1,10 @@
 :root {
-    --primary-color: #4f4a4b; /* Cor do texto */
-    --bg-gray: #ffffff; /* Branco */
+    --primary-color: #4f4a4b; 
+    --bg-gray: #ffffff;
     --border-gray: #ccc;
-    --yellow: #FFD700; /* Amarelo */
-    --red: #FF4500; /* Vermelho */
-    --green: #32CD32; /* Verde */
+    --yellow: #FFD700; 
+    --red: #FF4500; 
+    --green: #32CD32; 
 }
 
 * {
@@ -15,7 +15,7 @@
 
 body {
     background-color: var(--bg-gray);
-    color: var(--primary-color); /* Define a cor do texto */
+    color: var(--primary-color); 
     height: 100vh;
     width: 100vw;
     overflow: hidden;
@@ -29,7 +29,7 @@ body {
     align-items: center;
     justify-content: center;
     background-color: #4285f4;
-    color: var(--bg-gray); /* Define a cor do texto como branco */
+    color: var(--bg-gray); 
     border: none;
     width: 50%;
     height: 7vh;
@@ -46,21 +46,21 @@ header {
 }
 
 header h1 {
-    font-size: 40px;
+    font-size: 35px;
     color: #000;
     margin-bottom: 10px;
 }
 
 .linkCriarConta {
-    font-size: 18px;
+    font-size: 14px;
 }
 
 header a {
-    color: var(--primary-color); /* Define a cor do link */
+    color: var(--primary-color); 
 }
 
 .formulario {
-    gap: 20px;
+    gap: 15px;
     width: 50%;
     display: flex;
     justify-content: center;
@@ -69,18 +69,20 @@ header a {
 }
 
 input::placeholder {
-    color: var(--primary-color); /* Define a cor do placeholder */
+    color: var(--primary-color); 
     opacity: 1;
-    background-color: var(--bg-gray); /* Define o fundo como branco */
+    background-color: var(--bg-gray); 
 }
 
 input {
-    background-color: var(--bg-gray); /* Define o fundo como branco */
-    border: none; /* Remove todas as bordas */
-    border-bottom: 2px solid var(--primary-color); /* Adiciona apenas a borda inferior */
-    padding: 5px; /* Ajusta o espaçamento interno */
-    outline: none; /* Remove o contorno ao clicar */
-    color: var(--primary-color); /* Define a cor do texto */
+    background-color: var(--bg-gray); 
+    border: none; 
+    border-bottom: 2px solid var(--primary-color); 
+    padding: 5px; 
+    outline: none; 
+    color: var(--primary-color); 
+    width: 100%;
+    height: 7vh;
 }
 
 .text {
@@ -104,14 +106,14 @@ input {
     display: flex;
     align-items: center;
     text-align: center;
-    color: var(--primary-color); /* Define a cor do texto */
+    color: var(--primary-color); 
 }
 
 .separator::before,
 .separator::after {
     content: "";
     flex: 1;
-    border-bottom: 1px solid var(--primary-color); /* Define a borda */
+    border-bottom: 1px solid var(--primary-color); 
     margin: 0 10px;
 }
 
@@ -120,10 +122,10 @@ input {
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: var(--primary-color); /* Define a cor do texto */
+    color: var(--primary-color); 
     width: 70%;
     margin: 10px 0;
-    position: relative; /* Mantém os elementos alinhados corretamente */
+    position: relative;
 }
 
 .separar::before,
@@ -131,9 +133,9 @@ input {
     content: "";
     flex: 1;
     height: 1px;
-    background-color: var(--primary-color); /* Define a cor da linha */
+    background-color: var(--primary-color); 
     margin: 0 10px;
-    max-width: 100px; /* Define um tamanho máximo para as linhas */
+    max-width: 100px;
 }
 
 button, .text {
@@ -145,7 +147,7 @@ button, .text {
 .carroselLogin {
     overflow: hidden;
     position: relative;
-    width: 50vw; /* Ajusta a largura para 50% da tela */
+    width: 50vw; 
     height: 100vh;
     transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
@@ -153,7 +155,7 @@ button, .text {
 .carroselImgs {
     display: flex;
     transition: transform 0.5s ease-in-out;
-    width: 300%; /* 100% por cada imagem */
+    width: 300%; 
 }
 
 .cardImgs {
@@ -199,20 +201,23 @@ button, .text {
 .checkbox-container {
     display: flex;
     align-items: center;
-    gap: 5px; /* Espaçamento entre o checkbox e a label */
+    gap: 5px; 
 }
 
 .checkbox-container input[type="checkbox"] {
     margin: 0;
+    width: 20px; 
+    height: 20px; 
 }
 
 .formularios {
-    color: var(--primary-color); /* Define a cor do texto */
+
+    color: var(--primary-color); 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: var(--bg-gray); /* Define o fundo como branco */
+    background-color: var(--bg-gray); 
     flex: 1;
     width: 55vw;
     height: 100vh;
@@ -233,22 +238,20 @@ button, .text {
     transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
 
-.slide-out-left {
-    transform: translateX(-100%);
-    opacity: 0;
+.formularioFormatado {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-gray); 
+    flex: 1;
+    width: 100%;
+    height: 100vh;
+
+    gap: 8px;
 }
 
-.slide-in-right {
-    transform: translateX(0);
-    opacity: 1;
-}
-
-.slide-out-right {
-    transform: translateX(100%);
-    opacity: 0;
-}
-
-.slide-in-left {
-    transform: translateX(0);
-    opacity: 1;
+input {
+    width: 100%;
+    height: 7vh;
 }
