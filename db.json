@@ -1,3 +1,44 @@
 {
-  "users": []
+  "users": [
+    {
+      "id": "43af",
+      "nome": "roni",
+      "email": "r@a.com",
+      "dataNascimento": "2003-10-25",
+      "cpf": "05976497233",
+      "senha": "A@12345678",
+      "confirmarSenha": "",
+      "telefone": "05976497233"
+    },
+    {
+      "id": "7bf7",
+      "nome": "ferro",
+      "email": "f@a.com",
+      "dataNascimento": "2003-10-25",
+      "cpf": "05976497233",
+      "senha": "A@123456",
+      "confirmarSenha": "",
+      "telefone": "05976497233"
+    },
+    {
+      "id": "205a",
+      "nome": "alejandro",
+      "email": "alejandro.fadim@sptech.school",
+      "dataNascimento": "2003-10-12",
+      "cpf": "05976497233",
+      "senha": "AA@12345678",
+      "confirmarSenha": "",
+      "telefone": "153153121354"
+    },
+    {
+      "id": "8d29",
+      "nome": "pedroPires",
+      "email": "pedro@s.com",
+      "dataNascimento": "2003-10-25",
+      "cpf": "05976497233",
+      "senha": "A@12345678",
+      "confirmarSenha": "",
+      "telefone": "153153121354"
+    }
+  ]
 }

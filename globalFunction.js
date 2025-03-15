@@ -1,9 +1,16 @@
 
 
-export function errorCampo(campo, span, mensagem){
-    span.style.display = 'block';
-    campo.style.borderBottom = '1px solid red';
-    span.innerHTML = mensagem;
+export function errorCampo(mensagem){
+    errosForm.style.display = 'block'; 
+    errosForm.innerHTML += `${mensagem} <br>`;
+    const camposForm = document.querySelectorAll(".input-container")
+    camposForm.forEach(e =>{
+        const inputs = e.querySelectorAll('input')
+        inputs.forEach(e =>{
+            e.style.border = '1px solid red';
+
+        })
+    })
 }
 
 export function limparCampos(){
@@ -12,7 +19,7 @@ export function limparCampos(){
         input.style.borderBottom = '2px solid var(--primary-color)';
         const span = input.nextElementSibling;
         if (span && span.tagName === 'SPAN') {
-            span.style.display = 'none';
+            errosForm.style.display = 'none'; 
         }
     });
 }
@@ -35,8 +42,8 @@ export function carrossel() {
         document.querySelector('.carroselImgs').style.transform = `translateX(${offset}%)`;
     }
 
-    document.getElementById('nextButton').addEventListener('click', showNextImage);
-    document.getElementById('prevButton').addEventListener('click', showPrevImage);
+    // document.getElementById('nextButton').addEventListener('click', showNextImage);
+    // document.getElementById('prevButton').addEventListener('click', showPrevImage);
 
     setInterval(showNextImage, 3000);
 }

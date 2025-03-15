@@ -3,32 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="../public/style.css">
     <title>Cadastro</title>
 </head>
 <body>
-    
     <main class="main">
         <section class="carroselLogin" id="carroselLogin">
             <div class="carroselImgs"> 
                 <div class="cardImgs">
-                    <img src="../public/img/oferta_pizza_login_cadastro.png" alt="" class="imgs">
+                    <img src="../public/img/Bg-formularios.jpg" alt="" class="imgs">
                 </div>
                 <div class="cardImgs">
-                    <img src="../public/img/Pizzaria Story Instagram Moderno Vermelho.jpg" alt="" class="imgs">
+                    <img src="../public/img/Bg-formularios.jpg" alt="" class="imgs">
                 </div>
                 <div class="cardImgs">
-                    <img src="../public/img/Story do Instagram Pizza Vem de Combo Gastronômico Vermelho.jpg" alt="" class="imgs">
+                    <img src="../public/img/Bg-formularios.jpg" alt="" class="imgs">
                 </div>
             </div>
-
-            <button class="carousel-button prev" id="prevButton">
-                <img src="../public/img/proximo.png" alt="Anterior" class="prev-img">
-            </button>
-            <button class="carousel-button next" id="nextButton">
-                <img src="../public/img/proximo.png" alt="Próximo" class="next-img">
-            </button>
         </section>
 
         <section class="formularios formularioCadastro" id="formularioCadastro">
@@ -39,25 +30,41 @@
             
             <form action="" class="formulario" id="formularioCadastroForm">    
                 <div id="parte1">
-                    <input type="text" class="text" placeholder="Nome" id="nomeFormCadastro">
-                    <span id="spanNomeCadastro"></span>
-                    <input type="email" class="text" placeholder="Email" id="emailCadastro">
-                    <span id="spanEmailCadastro"></span>
-                    <input type="date" class="text" placeholder="Data de Nascimento" id="dataNascimentoCadastro">
-                    <span id="spanDataNascimentoCadastro"></span>
+                    <div class="input-container">
+                        <input type="text" class="text" placeholder=" " id="nomeFormCadastro">
+                        <span class="spanInput">Nome</span>
+                        <span id="spanNomeCadastro"> </span>
+                    </div>
+                    <div class="input-container">
+                        <input type="email" class="text" placeholder=" " id="emailCadastro">
+                        <span class="spanInput">Email</span>
+                    </div>
+                    <div class="input-container">
+                        <input type="date" class="text" placeholder=" " id="dataNascimentoCadastro">
+                        <span class="spanInput">Data de Nascimento</span>
+                    </div>
                     <button type="button" class="btt" id="bttcontinuarCadastro">Continuar</button>
                 </div>
                 <div id="parte2" class="hidden">
-                    <input type="number" class="text" placeholder="CPF" id="cpfCadastro">
-                    <span id="spanCpfCadastro"></span>
-                    <input type="password" class="text" placeholder="Senha" id="senhaCadastro">
-                    <span id="spanSenhaCadastro"></span>
-                    <input type="password" class="text" placeholder="Confirmar Senha" id="confirmarSenhaCadastro">
-                    <span id="spanConfirmarSenhaCadastro"></span>
-                    <input type="number" class="text" placeholder="Telefone" id="telefoneCadastro">
-                    <span id="spanTelefoneCadastro"></span>
+                    <div class="input-container">
+                        <input type="number" class="text" placeholder=" " id="cpfCadastro">
+                        <span class="spanInput">CPF</span>
+                    </div>
+                    <div class="input-container">
+                        <input type="password" class="text" placeholder=" " id="senhaCadastro">
+                        <span class="spanInput">Senha</span>
+                    </div>
+                    <div class="input-container">
+                        <input type="password" class="text" placeholder=" " id="confirmarSenhaCadastro">
+                        <span class="spanInput">Confirmar Senha</span>
+                    </div>
+                    <div class="input-container">
+                        <input type="number" class="text" placeholder=" " id="telefoneCadastro">
+                        <span class="spanInput">Telefone</span>
+                    </div>
                     <button class="btt" id="bttCriarConta">Criar Conta</button>
                 </div>
+                <span id="errosForm"></span>
             </form>
             <div class="separar">
                 <span>Ou</span>

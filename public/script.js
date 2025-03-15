@@ -23,15 +23,15 @@ function validacaoFormulario() {
     let senhaRegex = /(?=.*[A-Z])(?=.*[!@#$%^&*])/;
 
     if (emailFormulario == '') {
-        errorCampo(email, spanEmail, 'Preencha o campo email');
+        errorCampo('Preencha o campo email');
     } else if (!emailRegex.test(emailFormulario)) {
-        errorCampo(email, spanEmail, 'Preencha um email válido');
+        errorCampo('Preencha um email válido');
     } else if (senhaFormulario == '') {
-        errorCampo(senha, spanSenha, 'Preencha o campo senha');
+        errorCampo('Preencha o campo senha');
     } else if (senhaFormulario.length < 6) {
-        errorCampo(senha, spanSenha, 'A senha deve ter no mínimo 6 caracteres');
+        errorCampo('senha incorreta');
     } else if (!senhaRegex.test(senhaFormulario)) {
-        errorCampo(senha, spanSenha, 'A senha deve ter pelo menos uma letra maiúscula e um caractere especial');
+        errorCampo('senha incorreta');
     } else {
         limparCampos();
         dadosLogin = {

@@ -21,7 +21,7 @@ const bttCriarConta = document.getElementById('bttCriarConta');
 bttcontinuarCadastro.addEventListener('click', (e) => {
     e.preventDefault();
     validacaoCadastro();
-});
+});  
 
 bttCriarConta.addEventListener('click', (e) => {
     e.preventDefault();
@@ -36,21 +36,22 @@ function validacaoCadastro() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (nomeCadastro.value === '') {
-        errorCampo(nomeCadastro, document.getElementById('spanNomeCadastro'), 'Preencha o campo nome');
+        errorCampo('Preencha o campo nome');
     } else if (nomeCadastro.value.length < 3) {
-        errorCampo(nomeCadastro, document.getElementById('spanNomeCadastro'), 'O nome deve ter no mínimo 3 caracteres');
+        errorCampo('O nome deve ter no mínimo 3 caracteres');
     } else if (emailCadastro.value === '') {
-        errorCampo(emailCadastro, document.getElementById('spanEmailCadastro'), 'Preencha o campo email');
+        errorCampo('Preencha o campo email');
     } else if (!emailRegex.test(emailCadastro.value)) {
-        errorCampo(emailCadastro, document.getElementById('spanEmailCadastro'), 'Email inválido');
+        errorCampo('Email inválido');
     } else if (dataNascimentoCadastro.value === '') {
-        errorCampo(dataNascimentoCadastro, document.getElementById('spanDataNascimentoCadastro'), 'Preencha o campo data de nascimento');
+        errorCampo('Preencha o campo data de nascimento');
     } else if (!isValidDate(dataNascimentoCadastro.value)) {
-        errorCampo(dataNascimentoCadastro, document.getElementById('spanDataNascimentoCadastro'), 'Data de nascimento inválida');
+        errorCampo('Data de nascimento inválida');
     } else if (!isAdult(dataNascimentoCadastro.value)) {
-        errorCampo(dataNascimentoCadastro, document.getElementById('spanDataNascimentoCadastro'), 'Você deve ter pelo menos 18 anos');
+        errorCampo('Você deve ter pelo menos 18 anos');
     } else {
         limparCampos();
+        errosForm.innerHTML = '';
         parte1.style.display = 'none';
         parte2.style.display = 'flex';
         parte2.classList.add('formularioFormatado');
@@ -59,6 +60,8 @@ function validacaoCadastro() {
         dadosCadastro.email = emailCadastro.value;
         dadosCadastro.dataNascimento = dataNascimentoCadastro.value;
         console.log(dadosCadastro);
+    
+    
     }
 }
 
@@ -71,23 +74,23 @@ function validacaoCadastro2() {
     const cpfLimpo = cpfCadastro.value.replace(/\D/g, '');
 
     if (cpfLimpo === '') {
-        errorCampo(cpfCadastro, document.getElementById('spanCpfCadastro'), 'Preencha o campo CPF');
+        errorCampo('Preencha o campo CPF');
     } else if (cpfLimpo.length !== 11) {
-        errorCampo(cpfCadastro, document.getElementById('spanCpfCadastro'), 'CPF deve ter 11 dígitos');
+        errorCampo('CPF deve ter 11 dígitos');
     } else if (!isValidCPF(cpfLimpo)) {
-        errorCampo(cpfCadastro, document.getElementById('spanCpfCadastro'), 'CPF inválido');
+        errorCampo('CPF inválido');
     } else if (senhaCadastro.value === '') {
-        errorCampo(senhaCadastro, document.getElementById('spanSenhaCadastro'), 'Preencha o campo senha');
+        errorCampo('Preencha o campo senha');
     } else if (senhaCadastro.value.length < 8) {
-        errorCampo(senhaCadastro, document.getElementById('spanSenhaCadastro'), 'A senha deve ter no mínimo 8 caracteres');
+        errorCampo('A senha deve ter no mínimo 8 caracteres');
     } else if (confirmarSenhaCadastro.value === '') {
-        errorCampo(confirmarSenhaCadastro, document.getElementById('spanConfirmarSenhaCadastro'), 'Preencha o campo confirmar senha');
+        errorCampo('Preencha o campo confirmar senha');
     } else if (senhaCadastro.value !== confirmarSenhaCadastro.value) {
-        errorCampo(confirmarSenhaCadastro, document.getElementById('spanConfirmarSenhaCadastro'), 'Senhas não conferem');
+        errorCampo('Senhas não conferem');
     } else if (telefoneCadastro.value === '') {
-        errorCampo(telefoneCadastro, document.getElementById('spanTelefoneCadastro'), 'Preencha o campo telefone');
+        errorCampo('Preencha o campo telefone');
     } else if (telefoneCadastro.value.length < 10) {
-        errorCampo(telefoneCadastro, document.getElementById('spanTelefoneCadastro'), 'O telefone deve ter no mínimo 10 dígitos');
+        errorCampo('O telefone deve ter no mínimo 10 dígitos');
     } else {
         limparCampos();
         dadosCadastro.cpf = cpfLimpo;
@@ -136,10 +139,6 @@ function isValidCPF(cpf) {
     if (remainder !== parseInt(cpf.substring(10, 11))) return false;
     return true;
 }
-
-// document.addEventListener('DOMContentLoaded', () => {
-//     document.body.classList.add('slide-in-right');
-// });
 
 carrossel();
 
