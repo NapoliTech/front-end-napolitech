@@ -390,3 +390,102 @@ button, .text {
     flex-direction: column;
     gap: 8px;
 }
+
+@media (max-width: 1200px) {
+    .textBonari {
+        left: 10%;
+        width: 30vw;
+    }
+
+    .formularios {
+        right: 10%;
+        width: 400px;
+    }
+}
+
+@media (max-width: 992px) {
+    .textBonari {
+        left: 5%;
+        width: 35vw;
+    }
+
+    .formularios {
+        right: 5%;
+        width: 350px;
+    }
+}
+
+@media (max-width: 768px) {
+    .textBonari {
+        left: 5%;
+        width: 40vw;
+    }
+
+    .formularios {
+        right: 5%;
+        width: 300px;
+    }
+
+    .carousel-indicators .indicator {
+        width: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .textBonari {
+        display: none;
+    }
+
+    .formularios {
+        top: 50%;
+        right: 5%;
+        width: 90%;
+        padding: 20px;
+    }
+
+    .bttGoogle, .btt {
+        height: 35px;
+    }
+
+    header h1, header h2 {
+        font-size: 16px;
+    }
+
+    .input-container input {
+        height: 40px;
+    }
+
+    .input-container .spanInput {
+        font-size: 10px;
+    }
+
+    .input-container .toggle-password {
+        right: 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    .formularios {
+        padding: 10px;
+    }
+
+    .bttGoogle, .btt {
+        height: 30px;
+    }
+
+    header h1, header h2 {
+        font-size: 14px;
+    }
+
+    .input-container input {
+        height: 35px;
+    }
+
+    .input-container .spanInput {
+        font-size: 8px;
+    }
+
+    .input-container .toggle-password {
+        right: 5px;
+    }
+}
