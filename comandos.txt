@@ -1,8 +1,0 @@
-
-npm install
-npm run s
-
-
-ver os usuarios cadastrados
-
-curl http://localhost:3000/users
