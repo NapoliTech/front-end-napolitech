@@ -8,6 +8,7 @@ export function TextoComLogo({ logoSrc, logoAlt, classNameLogo,classNameHeading,
         <div className="divLogo">
             <Logo src={logoSrc} alt={logoAlt} className={classNameLogo} />
             <Heading level={1} className={classNameHeading}>{headingText}</Heading>
+            <h1></h1>
         </div>
     )
 }
