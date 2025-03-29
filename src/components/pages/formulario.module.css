@@ -1,0 +1,491 @@
+:root {
+    --primary-color: #4f4a4b;
+    --bg-gray: #ffffff;
+    --border-gray: #BDBDBD;
+    --yellow: #FFD700;
+    --red: #FF4500;
+    --green: #32CD32;
+}
+.zen-kaku-gothic-antique-regular {
+    font-weight: 400;
+    font-style: normal;
+}
+
+* {
+    font-family: "Zen Kaku Gothic Antique", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-gray);
+    color: var(--primary-color);
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+        .main {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+
+        #parte1{
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .bttGoogle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #4285f4;
+            color: var(--bg-gray);
+            border: none;
+            width: 100%;
+            height: 40px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            gap: 16px;
+        }
+
+        header h1 {
+            font-size: 18px;
+            color: #000;
+        }
+
+        header h2 {
+            font-size: 24px;
+            color: #000;
+        }
+
+        .linkCriarConta {
+            font-size: 14px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        header a {
+            color: var(--primary-color);
+        }
+        .textBonari{
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            top: 25%;
+            left: 20%;
+            width: 25vw;
+            height: 45vh;
+            gap: 8px;
+            color: #ffffff;
+
+            .divLogo{
+                display: flex;
+                gap: 16px;
+                align-items: center;
+
+
+                h1{
+                    font-size: 120px;
+                    font-weight: normal;
+                    font-family: "Italianno", cursive;
+                    
+                }
+
+            }
+            .divParagrafo{
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                margin-bottom: 16px;
+
+
+                h2{
+                    font-size: 40px;
+                    font-weight: bold;
+                }
+
+                p{
+                    font-size: 24px;
+                    font-weight: 300;
+                }
+            }
+            
+
+
+            .logo{
+                width: 70px;
+            }
+
+            
+            .carousel-indicators {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+                margin-top: 20px;
+            }
+
+            .carousel-indicators .indicator {
+                width: 30px;
+                height: 2px;
+                background-color: var(--primary-color);
+                border: none;
+                transition: all 0.3s ease;
+            }
+
+            .carousel-indicators .indicator.active {
+                height: 4px;
+                background-color: var(--bg-gray);
+            }
+
+
+        }
+
+
+        .formularios {
+            position: absolute;
+            top: 65%;
+            right: 16%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 450px;
+            max-width: 90%;
+            height: 100%;
+            color: var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            gap: 16px;
+            /* transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; */
+            /* animation: slideUp 0.3s ease-in-out;         */
+            animation: slideUp 0.5s linear;
+        }
+
+        @keyframes slideUp {
+            0% {
+                transform: translatey(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translatey(-50%);
+                opacity: 1;
+            }
+        }
+
+        .formulario {
+            margin-top: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            gap: 8px;
+        }
+
+        input::placeholder {
+            color: var(--primary-color);
+            opacity: 1;
+        }
+
+        input {
+            background-color: var(--bg-gray);
+            border: 1px solid var(--border-gray);
+            padding: 10px;
+            border-radius: 25px;
+            outline: none;
+            color: var(--primary-color);
+            width: 100%;
+            height: 40px;
+            position: relative;
+        }
+
+        input[type="password"] {
+            padding-right: 60px;
+        }
+
+        input:focus {
+            border-color: var(--primary-color);
+        }
+
+        .input-container {
+            position: relative;
+            margin-bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .input-container input {
+            width: 100%;
+            border-radius: 8px;
+            height: 50px;
+        }
+
+        .input-container .spanInput {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            font-size: 12px;
+            color: var(--primary-color);
+            pointer-events: none;
+            transition: all 0.2s ease;
+        }
+
+        .input-container input:focus + .spanInput,
+        .input-container input:not(:placeholder-shown) + .spanInput {
+            top: -10px;
+            font-size: 12px;
+            color: var(--primary-color);
+        }
+
+        .input-container .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .btt {
+            cursor: pointer;
+            width: 100%;
+            height: 40px;
+            border: none;
+            background-color: #000;
+            color: var(--bg-gray);
+            border-radius: 5px;
+        }
+
+        .separator {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--primary-color);
+        }
+
+        .separator::before,
+        .separator::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid var(--primary-color);
+            margin: 0 10px;
+        }
+
+        .separar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--primary-color);
+            width: 100%;
+            margin: 10px 0;
+            position: relative;
+        }
+
+        .separar::before,
+        .separar::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background-color: var(--primary-color);
+            margin: 0 10px;
+            max-width: 100%;
+        }
+
+        button, .text {
+            width: 100%;
+            height: 33px;
+            border-radius: 2px;
+        }
+
+        .carroselLogin {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .carroselImgs {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            width: 300%;
+            height: 100%;
+        }
+
+        .cardImgs {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        .imgs {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            margin: 0;
+            width: 20px;
+            height: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .block {
+            display: flex;
+        }
+
+
+        .formularioFormatado {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            width: 100%;
+            height: 100vh;
+            gap: 8px;
+        }
+
+        #errosForm{
+            color: var(--red);
+        }
+
+        #parte2{
+            flex-direction: column;
+            gap: 8px;
+        }
+}
+@media (max-width: 1200px) {
+    .textBonari {
+        left: 10%;
+        width: 30vw;
+    }
+
+    .formularios {
+        right: 10%;
+        width: 400px;
+    }
+}
+
+@media (max-width: 992px) {
+    .textBonari {
+        left: 5%;
+        width: 35vw;
+    }
+
+    .formularios {
+        right: 5%;
+        width: 350px;
+    }
+}
+
+@media (max-width: 768px) {
+    .textBonari {
+        left: 5%;
+        width: 40vw;
+    }
+
+    .formularios {
+        right: 5%;
+        width: 300px;
+    }
+
+    .carousel-indicators .indicator {
+        width: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .textBonari {
+        display: none;
+    }
+
+    .formularios {
+        top: 50%;
+        right: 5%;
+        width: 90%;
+        padding: 20px;
+    }
+
+    .bttGoogle, .btt {
+        height: 35px;
+    }
+
+    header h1, header h2 {
+        font-size: 16px;
+    }
+
+    .input-container input {
+        height: 40px;
+    }
+
+    .input-container .spanInput {
+        font-size: 10px;
+    }
+
+    .input-container .toggle-password {
+        right: 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    .formularios {
+        padding: 10px;
+    }
+
+    .bttGoogle, .btt {
+        height: 30px;
+    }
+
+    header h1, header h2 {
+        font-size: 14px;
+    }
+
+    .input-container input {
+        height: 35px;
+    }
+
+    .input-container .spanInput {
+        font-size: 8px;
+    }
+
+    .input-container .toggle-password {
+        right: 5px;
+    }
+}

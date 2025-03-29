@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import './Carrossel.css';
 import { ImageCard } from '../molecules/ImageCard';
 
-export function Carrossel() {
+export function Carrossel({ images }) {
   useEffect(() => {
     let currentIndex = 0;
     const images = document.querySelectorAll('.carroselImgs .cardImgs');
@@ -33,9 +33,14 @@ export function Carrossel() {
   return (
     <section className="carroselLogin" id="carroselLogin">
       <div className="carroselImgs">
-        <ImageCard src="/img/Bg-formularios.jpg" alt="" />
-        <ImageCard src="/img/bg-pizzaCaixa.jpg" alt="" />
-        <ImageCard src="/img/bg-pizzaMesa.jpg" alt="" />
+        {images.map((image, index) => (
+          <ImageCard
+            key={index}
+            src={image.src}
+            alt={image.alt || `Image ${index + 1}`}
+            className="carroselImgs" // Adiciona a classe diretamente
+          />
+        ))}
       </div>
     </section>
   );
