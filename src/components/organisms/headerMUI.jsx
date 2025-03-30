@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import PhoneIcon from "@mui/icons-material/Phone";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import { Carrossel } from "../organisms/Carrossel";
+import { Carrossel } from "./Carrossel";
 import Button from "@mui/material/Button";
 
 export default function HeaderMUI() {
@@ -137,7 +137,7 @@ export default function HeaderMUI() {
             marginBottom: "16px",
             fontFamily: "Oleo Script",
             fontWeight: 100,
-            fontStyle: 'normal'
+            fontStyle: "normal",
           }}
         >
           perfeição em <br /> cada fatia.
