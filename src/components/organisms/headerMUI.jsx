@@ -68,9 +68,7 @@ export default function HeaderMUI() {
             alignItems: "center",
           }}
         >
-          <a href="#about" style={{ color: "#FFF", textDecoration: "none" }}>
-            Sobre nós
-          </a>
+          
           <a href="#contact" style={{ color: "#FFF", textDecoration: "none" }}>
             Cardapio
           </a>
