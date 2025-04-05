@@ -5,6 +5,7 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import { Carrossel } from "./Carrossel";
 import Button from "@mui/material/Button";
+import { TituloH2 } from "../atoms/TituloH2";
 
 export default function HeaderMUI() {
   const images = [
@@ -130,17 +131,11 @@ export default function HeaderMUI() {
           zIndex: 10,
         }}
       >
-        <h1
-          style={{
-            fontSize: "80px",
-            marginBottom: "16px",
-            fontFamily: "Oleo Script",
-            fontWeight: 100,
-            fontStyle: "normal",
-          }}
-        >
-          perfeição em <br /> cada fatia.
-        </h1>
+        < TituloH2  
+          text={'Perfeição em cada fatia'}
+          fontSize={'80px'}
+          color={'#fff'}
+        />
 
         <Button
           variant="contained"

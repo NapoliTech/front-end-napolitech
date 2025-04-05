@@ -1,19 +1,19 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { BannerPizza } from "./BannerPizza";
 
-export function SectionMeio() {
+
+export function SectionMelhoresPizzas(){
   return (
     <Box
       component="section"
       sx={{
+        display: "flex",
         backgroundColor: "#DFDDD8",
-        display: 'flex',
         boxSizing: 'border-box',
-        height: '100vh',
+
       }}
-    >
-      <BannerPizza />
-    </Box>
+
+      
+    ></Box>
   );
 }

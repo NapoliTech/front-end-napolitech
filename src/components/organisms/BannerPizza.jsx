@@ -2,6 +2,7 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import { Box } from "@mui/material";
 import { SectionQualidade } from "../atoms/sectionQualidade";
+import { TituloH2 } from "../atoms/TituloH2";
 
 
 const StyledBox = styled(Box)(() => ({
@@ -25,14 +26,15 @@ export function BannerPizza() {
     <Box
       sx={{
         display: "flex",
+        justifyContent: "center",
         boxSizing: "border-box",
+        marginTop: "10px",
       }}
     >
       <Box
         sx={{
           width: "50%",
           display: "flex",
-          
         }}
       >
         <img
@@ -54,32 +56,24 @@ export function BannerPizza() {
           gap: "24px",
           maxWidth: "50%",
           flex: 1,
-          boxSizing: 'border-box',
+          boxSizing: "border-box",
         }}
       >
-        <h2
-          style={{
-            fontSize: "50px",
-            marginBottom: "16px",
-            fontFamily: "Oleo Script",
-            fontWeight: 100,
-            fontStyle: "normal",
-            color: 'red'
-          }}
-        >
-          VOCÊ MERECE UMA <br /> PIZZA HOJE!
-        </h2>
+        <TituloH2
+          text={<>Você merece uma <br/> pizza hoje!</>}
+          fontSize={"50px"}
+          color={"red"}
+        />
         <Box
           sx={{
             display: "flex",
-            overflow: 'hidden',
+            overflow: "hidden",
             flexWrap: "wrap",
             marginTop: "16px",
             gap: "4px",
           }}
         >
           <StyledBox>
-          
             <SectionQualidade
               srcImg={"/img/camarao.png"}
               textH2={"Produtos de qualidade"}
