@@ -27,103 +27,117 @@ export function BannerPizza() {
       sx={{
         display: "flex",
         justifyContent: "center",
+        alignItems: "center",
         boxSizing: "border-box",
-        marginTop: "10px",
+        height: "100vh",
+        margin: '50px'
       }}
     >
       <Box
         sx={{
-          width: "50%",
+          width: "80%",
           display: "flex",
-        }}
-      >
-        <img
-          src="/img/pizzaBanner.png"
-          alt="Pizza Banner"
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "scale-down",
-            borderRadius: "8px",
-          }}
-        />
-      </Box>
-
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
           gap: "24px",
-          maxWidth: "50%",
-          flex: 1,
-          boxSizing: "border-box",
         }}
       >
-        <TituloH2
-          text={<>Você merece uma <br/> pizza hoje!</>}
-          fontSize={"50px"}
-          color={"red"}
-        />
+        <Box
+          sx={{
+            width: "50%",
+            display: "flex",
+          }}
+        >
+          <img
+            src="/img/pizzaBanner.png"
+            alt="Pizza Banner"
+            style={{
+              width: "150%",
+              height: "100%",
+              objectFit: "cover",
+              borderRadius: "8px",
+              marginLeft: '-190px'
+            }}
+          />
+        </Box>
+
         <Box
           sx={{
             display: "flex",
-            overflow: "hidden",
-            flexWrap: "wrap",
-            marginTop: "16px",
-            gap: "4px",
+            flexDirection: "column",
+            gap: "24px",
+            maxWidth: "50%",
+            flex: 1,
+            boxSizing: "border-box",
           }}
         >
-          <StyledBox>
-            <SectionQualidade
-              srcImg={"/img/camarao.png"}
-              textH2={"Produtos de qualidade"}
-              textP={
-                <>
-                  cuidadosamente escolidos <br /> para um alto nivel de
-                  qualidade
-                </>
-              }
-            />
-          </StyledBox>
+          <TituloH2
+            text={<>Você merece uma <br /> pizza hoje!</>}
+            fontSize={"50px"}
+            color={"red"}
 
-          <StyledBox>
-            <SectionQualidade
-              srcImg={"/img/tomate.png"}
-              textH2={"Produtos de qualidade"}
-              textP={
-                <>
-                  cuidadosamente escolidos <br /> para um alto nivel de
-                  qualidade
-                </>
-              }
-            />
-          </StyledBox>
+            
+          />
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: "8px",
+              marginTop: "16px",
+            }}
+          >
+            <StyledBox>
+              <SectionQualidade
+                srcImg={"/img/camarao.png"}
+                textH2={"Produtos de qualidade"}
+                textP={
+                  <>
+                    cuidadosamente escolidos <br /> para um alto nivel de
+                    qualidade
+                  </>
+                }
+              />
+            </StyledBox>
 
-          <StyledBox>
-            <SectionQualidade
-              srcImg={"/img/azeite.png"}
-              textH2={"Produtos de qualidade"}
-              textP={
-                <>
-                  cuidadosamente escolidos <br /> para um alto nivel de
-                  qualidade
-                </>
-              }
-            />
-          </StyledBox>
+            <StyledBox>
+              <SectionQualidade
+                srcImg={"/img/tomate.png"}
+                textH2={"Produtos de qualidade"}
+                textP={
+                  <>
+                    cuidadosamente escolidos <br /> para um alto nivel de
+                    qualidade
+                  </>
+                }
+              />
+            </StyledBox>
 
-          <StyledBox>
-            <SectionQualidade
-              srcImg={"/img/joia.png"}
-              textH2={"Produtos de qualidade"}
-              textP={
-                <>
-                  cuidadosamente escolidos <br /> para um alto nivel de
-                  qualidade
-                </>
-              }
-            />
-          </StyledBox>
+            <StyledBox>
+              <SectionQualidade
+                srcImg={"/img/azeite.png"}
+                textH2={"Produtos de qualidade"}
+                textP={
+                  <>
+                    cuidadosamente escolidos <br /> para um alto nivel de
+                    qualidade
+                  </>
+                }
+              />
+            </StyledBox>
+
+            <StyledBox>
+              <SectionQualidade
+                srcImg={"/img/joia.png"}
+                textH2={"Produtos de qualidade"}
+                textP={
+                  <>
+                    cuidadosamente escolidos <br /> para um alto nivel de
+                    qualidade
+                  </>
+                }
+              />
+            </StyledBox>
+          </Box>
         </Box>
       </Box>
     </Box>
