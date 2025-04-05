@@ -10,7 +10,7 @@ export function SectionMeio() {
         backgroundColor: "#DFDDD8",
         display: 'flex',
         boxSizing: 'border-box',
-        height: '100vh',
+        height: 'auto',
       }}
     >
       <BannerPizza />

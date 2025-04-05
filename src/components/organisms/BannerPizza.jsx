@@ -4,21 +4,20 @@ import { Box } from "@mui/material";
 import { SectionQualidade } from "../atoms/sectionQualidade";
 import { TituloH2 } from "../atoms/TituloH2";
 
-
 const StyledBox = styled(Box)(() => ({
   width: "290px",
   height: "280px",
   margin: "8px",
   borderRadius: "8px",
   display: "flex",
-  flexDirection: 'column',
-  gap: '8px',
-    "& img": {
-      width: "80px",
-      height: "auto",
-      objectFit: "cover", 
-      marginBottom: "8px",
-    },
+  flexDirection: "column",
+  gap: "8px",
+  "& img": {
+    width: "80px",
+    height: "auto",
+    objectFit: "cover",
+    marginBottom: "8px",
+  },
 }));
 
 export function BannerPizza() {
@@ -29,8 +28,8 @@ export function BannerPizza() {
         justifyContent: "center",
         alignItems: "center",
         boxSizing: "border-box",
-        height: "100vh",
-        margin: '50px'
+        margin: "50px",
+        marginTop: "30px",
       }}
     >
       <Box
@@ -56,7 +55,7 @@ export function BannerPizza() {
               height: "100%",
               objectFit: "cover",
               borderRadius: "8px",
-              marginLeft: '-190px'
+              marginLeft: "-190px",
             }}
           />
         </Box>
@@ -72,11 +71,13 @@ export function BannerPizza() {
           }}
         >
           <TituloH2
-            text={<>Você merece uma <br /> pizza hoje!</>}
+            text={
+              <>
+                Você merece uma <br /> pizza hoje!
+              </>
+            }
             fontSize={"50px"}
             color={"red"}
-
-            
           />
           <Box
             sx={{
