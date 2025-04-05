@@ -1,10 +1,6 @@
 import * as React from "react";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+
 
 export default function CardPizza({src, sabor, desc, preco }) {
   return (
@@ -29,15 +25,15 @@ export default function CardPizza({src, sabor, desc, preco }) {
       <h2
         style={{
           color: "red",
-          fontSize: "1.2rem", // Diminuir o tamanho da fonte
+          fontSize: "1.2rem", 
         }}
       >
         {sabor}
       </h2>
-      <p style={{ fontSize: "0.9rem" }}> {/* Diminuir o tamanho da fonte */}
+      <p style={{ fontSize: "0.9rem" }}> 
         {desc}
       </p>
-      <h2 style={{ color: "#168928", fontSize: "1rem" }}>{preco}</h2> {/* Diminuir o tamanho da fonte */}
+      <h2 style={{ color: "#168928", fontSize: "1rem" }}>{preco}</h2> 
     </Card>
   );
 }

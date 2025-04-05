@@ -152,7 +152,7 @@ export default function HeaderMUI() {
 
       <Box
         sx={{
-          height: "95vh",
+          height: "100vh",
           width: "100%",
         }}
       >
