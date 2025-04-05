@@ -1,6 +1,7 @@
 import React from "react";
 import HeaderMUI from "../organisms/headerMUI.jsx";
 import { SectionMeio } from "../organisms/SectionMeio.jsx";
+import { SectionMelhoresPizzas } from "../organisms/SectionMelhoresPizzas.jsx";
 // import SectionMeio from "../molecules/SectionMeio.jsx";
 
 export function Home() {
@@ -16,6 +17,7 @@ export function Home() {
     >
       <HeaderMUI />
       <SectionMeio />
+      <SectionMelhoresPizzas />
     </body>
   );
 }
