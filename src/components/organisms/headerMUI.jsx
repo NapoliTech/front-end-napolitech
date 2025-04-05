@@ -14,7 +14,6 @@ export default function HeaderMUI() {
 
   return (
     <header>
-      {/* Barra superior */}
       <Box
         sx={{
           backgroundColor: "#B72A23",
@@ -128,7 +127,7 @@ export default function HeaderMUI() {
           // alignItems: "center",
           // padding: "16px 32px",
           color: "white",
-          zIndex: 10, // Garante que fique acima do Carrossel
+          zIndex: 10,
         }}
       >
         <h1
