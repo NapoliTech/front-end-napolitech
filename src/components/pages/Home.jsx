@@ -7,7 +7,7 @@ import Footer from "../organisms/Footer.jsx";
 
 export function Home() {
   return (
-    <body
+    <div
       style={{
         backgroundColor: "#EEEDE8",
         margin: 0,
@@ -20,6 +20,6 @@ export function Home() {
       <SectionMeio />
       <SectionMelhoresPizzas />
       <Footer />
-    </body>
+    </div>
   );
 }

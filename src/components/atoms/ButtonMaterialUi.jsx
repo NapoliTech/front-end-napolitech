@@ -1,15 +1,18 @@
-import React from "react";
+import * as React from "react";
 import Button from "@mui/material/Button";
-import { styled } from "@mui/material/styles";
+import Stack from "@mui/material/Stack";
 
-// Criando um botão estilizado
-const CustomButton = styled(Button)(({ theme }) => ({
-    backgroundColor: "black", // Cor de fundo
-    color: "white",          // Cor do texto
-    padding: "10px 20px",    // Espaçamento interno
-    theme
-}));
+export default function ButtonMaterialUi({ texto, bg }) {
+  return (
+    <Button
+      variant="contained"
+      sx={{
+        backgroundColor: bg,
 
-export default function ButtonMaterialUi() {
-    return <CustomButton variant="contained">Hello world</CustomButton>;
+        maxWidth: "300px",
+      }}
+    >
+      {texto}
+    </Button>
+  );
 }
