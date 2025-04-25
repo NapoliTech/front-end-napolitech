@@ -5,12 +5,17 @@ import {Login} from './components/organisms/Login';
 import { Cadastro } from './components/organisms/Cadastro';
 import { Home } from './components/pages/Home';
 import Pedidos from './components/pages/pedidos';
-import { RouterProvider } from  'react-router-dom'
-import { routes } from './routes';
 
 function App() {
   return (
-    <RouterProvider router={routes}/>
+    <Router>
+      <Routes>
+        <Route path="/Login" element={<CarosselComTexto><Login /></CarosselComTexto>} />
+        <Route path="/cadastro" element={<CarosselComTexto><Cadastro /></CarosselComTexto>} />
+        <Route path="/" element={<Home />} />
+        <Route path="/pedidos" element={<Pedidos />} />
+      </Routes>
+    </Router>
   );
 }
 

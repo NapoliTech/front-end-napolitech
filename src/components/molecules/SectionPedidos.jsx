@@ -22,9 +22,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { MelhoresPizzas } from "./melhoresPizzas";
 import.meta.env;
 
-
-
-
+import TabuaPizza from "../../../public/img/tabuaPizza2.png";
 
 export default function SectionPedidos() {
   const [tooltipOpen, setTooltipOpen] = useState(true);
@@ -120,61 +118,61 @@ export default function SectionPedidos() {
     setMetadeSelecionada(null);
   };
 
-function adicionarPizzaAoPedido() {
-  console.log("Função adicionarPizzaAoPedido chamada");
-  console.log("Sabor Esquerda:", saborEsquerda);
-  console.log("Sabor Direita:", saborDireita);
+  function adicionarPizzaAoPedido() {
+    console.log("Função adicionarPizzaAoPedido chamada");
+    console.log("Sabor Esquerda:", saborEsquerda);
+    console.log("Sabor Direita:", saborDireita);
 
-  if (saborEsquerda && saborDireita) {
-    const precoTotal = (
-      parseFloat(saborEsquerda.preco) + parseFloat(saborDireita.preco)
-    ).toFixed(2);
+    if (saborEsquerda && saborDireita) {
+      const precoTotal = (
+        parseFloat(saborEsquerda.preco) + parseFloat(saborDireita.preco)
+      ).toFixed(2);
 
-    console.log("Preço total calculado:", precoTotal);
+      console.log("Preço total calculado:", precoTotal);
 
-    const novaPizza = {
-      id: Date.now(),
-      metades: [
-        {
-          lado: "esquerda",
-          sabor: saborEsquerda.sabor,
-          texto: saborEsquerda.texto,
-          preco: saborEsquerda.preco,
-          imagem: saborEsquerda.imagem,
-        },
-        {
-          lado: "direita",
-          sabor: saborDireita.sabor,
-          texto: saborDireita.texto,
-          preco: saborDireita.preco,
-          imagem: saborDireita.imagem,
-        },
-      ],
-      sabor: `Meia ${saborEsquerda.sabor} / Meia ${saborDireita.sabor}`,
-      texto: `Pizza meio a meio`,
-      preco: precoTotal,
-    };
+      const novaPizza = {
+        id: Date.now(),
+        metades: [
+          {
+            lado: "esquerda",
+            sabor: saborEsquerda.sabor,
+            texto: saborEsquerda.texto,
+            preco: saborEsquerda.preco,
+            imagem: saborEsquerda.imagem,
+          },
+          {
+            lado: "direita",
+            sabor: saborDireita.sabor,
+            texto: saborDireita.texto,
+            preco: saborDireita.preco,
+            imagem: saborDireita.imagem,
+          },
+        ],
+        sabor: `Meia ${saborEsquerda.sabor} / Meia ${saborDireita.sabor}`,
+        texto: `Pizza meio a meio`,
+        preco: precoTotal,
+      };
 
-    console.log("Nova pizza a ser adicionada:", novaPizza);
+      console.log("Nova pizza a ser adicionada:", novaPizza);
 
-    setPizzasSelecionadas((pizzasAtuais) => {
-      const novaLista = [...pizzasAtuais, novaPizza];
-      console.log("Nova lista de pizzas:", novaLista);
-      return novaLista;
-    });
+      setPizzasSelecionadas((pizzasAtuais) => {
+        const novaLista = [...pizzasAtuais, novaPizza];
+        console.log("Nova lista de pizzas:", novaLista);
+        return novaLista;
+      });
 
-    // Limpa as seleções após adicionar ao pedido
-    setSaborEsquerda(null);
-    setSaborDireita(null);
+      // Limpa as seleções após adicionar ao pedido
+      setSaborEsquerda(null);
+      setSaborDireita(null);
 
-    console.log("Seleções limpas");
-  } else {
-    // Se apenas uma metade foi selecionada
-    alert(
-      "Por favor, selecione ambas as metades da pizza antes de adicionar ao carrinho."
-    );
+      console.log("Seleções limpas");
+    } else {
+      // Se apenas uma metade foi selecionada
+      alert(
+        "Por favor, selecione ambas as metades da pizza antes de adicionar ao carrinho."
+      );
+    }
   }
-};
 
   // Função para calcular o valor total do pedido
   const calcularTotal = () => {
@@ -271,51 +269,105 @@ function adicionarPizzaAoPedido() {
                   overflow: "hidden",
                 }}
               />
-              {/* Metade esquerda */}
+
               <Box
                 sx={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: saborEsquerda
-                    ? `url("/img/${saborEsquerda.imagem}")`
-                    : 'url("/img/tabua_pizza.png")',
-                  backgroundSize: saborEsquerda ? "50%" : "cover", // <-- aqui o ajuste!
-                  backgroundRepeat: "no-repeat", // impede repetição
-                  backgroundPosition: saborEsquerda ? "left" : "center",
-                  position: "absolute",
-                  clipPath: "polygon(0 0, 50% 0, 50% 100%, 0 100%)",
-                  transition: "transform 0.3s ease",
-                  cursor: "pointer",
-                  "&:hover": {
-                    transform: "scale(1.05)",
-                    zIndex: 1,
-                  },
+                  height: "250px",
+                  width: "250px",
+                  display: "flex",
+                  justifyContent: "center",
                 }}
-                onClick={() => handleMetadeClick("esquerda")}
-              />
-              {/* Metade direita */}
-              <Box
-                sx={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: saborDireita
-                    ? `url("/img/${saborDireita.imagem}")`
-                    : 'url("/img/tabua_pizza.png")',
-                  backgroundSize: saborDireita ? "50%" : "cover",
-                  backgroundPosition: saborDireita ? "right" : "center",
-                  transform: saborDireita ? "rotateY(180deg)" : "rotateY(0deg)",
-                  // transform: saborEsquerda ? "rotate(180deg)" : "none",
-                  position: "absolute",
-                  clipPath: "polygon(50% 0, 100% 0, 100% 100%, 50% 100%)",
-                  transition: "transform 0.3s ease",
-                  cursor: "pointer",
-                  "&:hover": {
-                    transform: "scale(1.05)",
-                    zIndex: 1,
-                  },
-                }}
-                onClick={() => handleMetadeClick("direita")}
-              />
+              >
+                {/* Metade esquerda */}
+                <Box
+                  onClick={() => handleMetadeClick("esquerda")}
+                  sx={
+                    {
+                      // clipPath: "polygon(0 0, 50% 0, 50% 100%, 0 100%)",
+                    }
+                  }
+                >
+                  <img
+                    style={{
+                      height: "150px",
+                      // width: "150px",
+                    }}
+                    src={
+                      saborEsquerda
+                        ? `/img/${saborEsquerda.imagem}`
+                        : TabuaPizza
+                    }
+                    alt=""
+                  />
+                </Box>
+
+                <Box
+                  sx={
+                    {
+                      // clipPath: "polygon(50% 0, 100% 0, 100% 100%, 50% 100%)",
+                    }
+                  }
+                >
+                  <img
+                    style={{
+                      height: "150px",
+                      // transform: "rotateY(180deg)",
+                      transform: "rotateY(180deg) rotateX(180deg)",
+                      // width: "150px",
+                    }}
+                    onClick={() => handleMetadeClick("direita")}
+                    src={
+                      saborDireita ? `/img/${saborEsquerda.imagem}` : TabuaPizza
+                    }
+                    alt=""
+                  />
+                </Box>
+
+                {/* <Box
+                  sx={{
+                    width: "50%",
+                    height: "100%",
+                    backgroundImage: saborEsquerda
+                      ? `url("/img/${saborEsquerda.imagem}")`
+                      : 'url("/img/tabua_pizza.png")',
+                    backgroundSize: saborEsquerda ? "50%" : "cover", // <-- aqui o ajuste!
+                    backgroundRepeat: "no-repeat", // impede repetição
+                    backgroundPosition: "left",
+                    clipPath: "polygon(0 0, 50% 0, 50% 100%, 0 100%)",
+                    transition: "transform 0.3s ease",
+                    cursor: "pointer",
+                    // "&:hover": {
+                    //   transform: "scale(1.05)",
+                    //   zIndex: 1,
+                    // },
+                  }}
+                  onClick={() => handleMetadeClick("esquerda")}
+                /> */}
+                {/* Metade direita */}
+
+                {/* <Box
+                  sx={{
+                    width: "50%",
+                    height: "100%",
+                    backgroundImage: saborDireita
+                      ? `url("/img/${saborDireita.imagem}")`
+                      : 'url("/img/tabua_pizza.png")',
+                    backgroundSize: saborDireita ? "50%" : "cover",
+                    backgroundRepeat: "no-repeat",
+                    transform: "rotateY(180deg)",
+                    transition: "transform 0.3s ease",
+                    cursor: "pointer",
+                    // backgroundPosition: saborDireita ? "left" : "center",
+                    // transform: saborEsquerda ? "rotate(180deg)" : "none",
+                    // clipPath: "polygon(50% 0, 100% 0, 100% 100%, 50% 100%)",
+                    // "&:hover": {
+                    //   transform: "scale(1.05)",
+                    //   zIndex: 1,
+                    // },
+                  }}
+                  onClick={() => handleMetadeClick("direita")}
+                /> */}
+              </Box>
             </Box>
           </Tooltip>
 
@@ -577,24 +629,23 @@ function adicionarPizzaAoPedido() {
         </DialogActions>
       </Dialog>
 
-
       <Box
-              sx={{
-                boxSizing: "border-box",
-                width: "100%",
-                height: "auto",
-                overflow: "hidden",
-                whiteSpace: "nowrap", 
-                textOverflow: "ellipsis",
-                backgroundColor: "#DFDDD8",
-              }}
-            >
-              <TituloH2
-                text={"* AMOR POR ENTREGAR* * AMOR POR PIZZA*  * AMOR POR ENTREGAR*"}
-                fontSize={"70px"}
-                color={"red"}
-              />
-            </Box>
+        sx={{
+          boxSizing: "border-box",
+          width: "100%",
+          height: "auto",
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+          textOverflow: "ellipsis",
+          backgroundColor: "#DFDDD8",
+        }}
+      >
+        <TituloH2
+          text={"* AMOR POR ENTREGAR* * AMOR POR PIZZA*  * AMOR POR ENTREGAR*"}
+          fontSize={"70px"}
+          color={"red"}
+        />
+      </Box>
     </Box>
   );
 }
