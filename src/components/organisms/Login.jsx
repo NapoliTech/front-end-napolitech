@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { CampoForm } from "../molecules/CampoForm";
 import { Link } from 'react-router-dom';
+import { api } from '../../provider/apiInstance';
 
 export function Login() {
     const [email, setEmail] = useState("");
@@ -43,14 +44,27 @@ export function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log("Formulário enviado");
         const validationErrors = validate();
         if (Object.keys(validationErrors).length > 0) {
+            console.log("Erros de validação:", validationErrors);
             setErrors(validationErrors);
         } else {
-            console.log("Email:", email);
-            console.log("Senha:", senha);
-            setErrors({});
-            navigate('/');
+            console.log("Tentando fazer login...");
+            api.post("/api/login", { email, senha })
+                .then((response) => {
+                    console.log("Resposta da API:", response);
+                    if (response.status === 200) {
+                        localStorage.setItem("token", response.data);
+                        navigate("/pedidos");
+                    } else {
+                        setErrors({ api: "Erro ao fazer login" });
+                    }
+                })
+                .catch((error) => {
+                    console.error("Erro na requisição:", error);
+                    setErrors({ api: "Erro ao fazer login" });
+                });
         }
     };
 

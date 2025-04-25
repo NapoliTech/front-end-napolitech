@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CampoForm } from '../molecules/CampoForm';
+import { api } from '../../provider/apiInstance';
 
 export function Cadastro() {
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
-    const [dataNascimento, setDataNascimento] = useState("");
+    const [dataNasc, setdataNasc] = useState("");
     const [cpf, setCpf] = useState("");
     const [senha, setSenha] = useState("");
     const [confirmarSenha, setConfirmarSenha] = useState("");
@@ -19,8 +20,8 @@ export function Cadastro() {
 
     const handleNomeChange = (e) => setNome(e.target.value);
     const handleEmailChange = (e) => setEmail(e.target.value);
-    const handleDataNascimentoChange = (e) => setDataNascimento(e.target.value);
-    const handleCpfChange = (e) => setCpf(e.target.value);
+    const handledataNascChange = (e) => setdataNasc(e.target.value);    
+    const handleCpfChange = (e) => {setCpf(formatCpf(e.target.value));};    
     const handleSenhaChange = (e) => setSenha(e.target.value);
     const handleConfirmarSenhaChange = (e) => setConfirmarSenha(e.target.value);
 
@@ -28,7 +29,7 @@ export function Cadastro() {
         const newErrors = {};
         if (!nome) newErrors.nome = "Nome é obrigatório";
         if (!email) newErrors.email = "Email é obrigatório";
-        if (!dataNascimento) newErrors.dataNascimento = "Data de Nascimento é obrigatória";
+        if (!dataNasc) newErrors.dataNasc = "Data de Nascimento é obrigatória";
         return newErrors;
     };
 
@@ -49,6 +50,15 @@ export function Cadastro() {
         }
         return newErrors;
     };
+
+    const formatCpf = (value) => {
+        return value
+            .replace(/\D/g, "") 
+            .replace(/(\d{3})(\d)/, "$1.$2") 
+            .replace(/(\d{3})(\d)/, "$1.$2") 
+            .replace(/(\d{3})(\d{1,2})$/, "$1-$2"); 
+    };
+    
 
     const validateSenha = (senha) => {
         const senhaRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
@@ -72,13 +82,32 @@ export function Cadastro() {
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
         } else {
-            console.log("Nome:", nome);
-            console.log("Email:", email);
-            console.log("Data de Nascimento:", dataNascimento);
-            console.log("CPF:", cpf);
-            console.log("Senha:", senha);
+
+            const usuario = {
+                nome,
+                email,
+                dataNasc: dataNasc.split("-").reverse().join("/"),
+                cpf,
+                senha,
+                confirmarSenha,
+                telefone: "(11) 99999-9999" 
+            };
+
+
+            console.log("JSON DE USUARIO PARA O CADASTRO:", usuario);
             setErrors({});
-            navigate('/');
+
+
+            api.post('/api/cadastro', usuario)
+                .then((response) => {
+                    console.log(response.data);
+                    
+                    navigate('/login');
+                })
+                .catch((error) => {
+                    console.error("Erro ao cadastrar:", error);
+                    setErrors({ api: "Erro ao cadastrar. Tente novamente." });
+                });
         }
     };
 
@@ -95,7 +124,7 @@ export function Cadastro() {
             <form action="" className="formulario" id="formulario">
                 {!showParte2 && (
                     <div id="parte1">
-                        <CampoForm  
+                        <CampoForm
                             type="text"
                             placeholder=" "
                             id="nomeFormCadastro"
@@ -118,11 +147,11 @@ export function Cadastro() {
                         <CampoForm
                             type="date"
                             placeholder=" "
-                            id="dataNascimentoCadastro"
+                            id="dataNascCadastro"
                             classNameInput="text"
                             spanText="Data de Nascimento"
-                            value={dataNascimento}
-                            onChange={handleDataNascimentoChange}
+                            value={dataNasc}
+                            onChange={handledataNascChange}
                         />
                     </div>
                 )}
@@ -130,7 +159,7 @@ export function Cadastro() {
                 {showParte2 && (
                     <div id="parte2">
                         <CampoForm
-                            type="number"   
+                            type="text"
                             placeholder=" "
                             id="cpfCadastro"
                             classNameInput="text"
@@ -148,7 +177,7 @@ export function Cadastro() {
                             value={senha}
                             onChange={handleSenhaChange}
                         />
-                        
+
                         <CampoForm
                             type="password"
                             placeholder=" "
