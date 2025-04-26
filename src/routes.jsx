@@ -4,6 +4,7 @@ import { Login } from "./components/organisms/Login";
 import { Cadastro } from "./components/organisms/Cadastro";
 import { Home } from "./components/pages/Home";
 import Pedidos from "./components/pages/pedidos";
+import Atendimento from "./components/pages/Atendimento";
 
 export const routes = createBrowserRouter([
   {
@@ -28,4 +29,7 @@ export const routes = createBrowserRouter([
   },
   { path: "/", element: <Home /> },
   { path: "/pedidos", element: <Pedidos /> },
+  { path: "/atendimento", element: <Atendimento /> },
+  { path: "/", element: <Atendimento /> },
+
 ]);

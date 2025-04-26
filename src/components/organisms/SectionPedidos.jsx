@@ -12,17 +12,24 @@ import {
   InputAdornment,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
 import SelectValores from "../atoms/SelectValores";
 import { TituloH2 } from "../atoms/TituloH2";
 import ButtonMaterialUi from "../atoms/ButtonMaterialUi";
 import ItemListaDePedidos from "../atoms/ItemListaDePedidos";
 import Acordeon from "../atoms/Acordeon";
 import SearchIcon from "@mui/icons-material/Search";
-import { MelhoresPizzas } from "./melhoresPizzas";
+import { MelhoresPizzas } from "../molecules/melhoresPizzas";
 import.meta.env;
-
-import TabuaPizza from "../../../public/img/tabuaPizza2.png";
+import TabuaPizza from "../../../public/img/tabua_pizza__.png";
+import TabuaPizzaEsq from "../../../public/img/tabua_pizzaEsq.png";
+import TabuaPizzaDir from "../../../public/img/tomate.png";
+import { api } from "../../provider/apiInstance";
+// import { decode } from "jwt-decode";
+// import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
+import CadastroEndereco from "../molecules/CadastroEndereco";
+import EscolherEndereco from "../molecules/EscolherEndereco";
 
 export default function SectionPedidos() {
   const [tooltipOpen, setTooltipOpen] = useState(true);
@@ -31,18 +38,18 @@ export default function SectionPedidos() {
   const [pizzasSelecionadas, setPizzasSelecionadas] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [produtosFiltrados, setProdutosFiltrados] = useState([]);
-
-  // Estados para controlar as metades da pizza
   const [metadeSelecionada, setMetadeSelecionada] = useState(null);
   const [saborEsquerda, setSaborEsquerda] = useState(null);
   const [saborDireita, setSaborDireita] = useState(null);
+  const [enderecos, setEnderecos] = useState([]);
+  const [dialogEnderecoOpen, setDialogEnderecoOpen] = useState(false);
+  const [dialogEscolherEnderecoOpen, setDialogEscolherEnderecoOpen] =
+    useState(false);
+  const [userId, setUserId] = useState(null); // Estado para armazenar o ID do usuário
 
   const fetchProdutos = async () => {
     try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/produtos`
-      );
-
+      const response = await api.get("/api/produtos");
       console.log("Resposta da API:", response);
       if (Array.isArray(response.data)) {
         setProdutos(response.data);
@@ -55,7 +62,78 @@ export default function SectionPedidos() {
     }
   };
 
+  const gerarTokerDescrip = () => {
+    const token = localStorage.getItem("token"); // Obtém o token do localStorage
+    if (!token) {
+      alert("Usuário não autenticado. Faça login para continuar.");
+      return null; // Retorna null se o token não existir
+    }
+
+    try {
+      const decodedToken = jwtDecode(token); // Decodifica o token
+      console.log("Token decodificado:", decodedToken); // Verifica o conteúdo do token decodificado
+
+      const userId = decodedToken.id; // Obtém o campo id do token
+      console.log("ID do usuário extraído do token:", userId);
+
+      if (!userId) {
+        alert("ID do usuário não encontrado no token.");
+        return null; // Retorna null se o ID não for encontrado
+      }
+
+      return userId; // Retorna o userId
+    } catch (error) {
+      console.error("Erro ao decodificar o token:", error);
+      alert("Token inválido. Faça login novamente.");
+      return null; // Retorna null em caso de erro
+    }
+  };
+
+
+
+
+
+    const verificarEndereco = async () => {
+      console.log("Botão clicado, função verificarEndereco chamada");
+      try {
+        if (!userId) {
+          return; // Interrompe a execução se o userId não for válido
+        }
+
+        // Faz a requisição para a API usando o ID do usuário
+        const response = await api.get(`/api/enderecos/${userId}`);
+        console.log("Resposta da API:", response.data);
+
+        // Verifica se há um endereço cadastrado
+        if (response.data && response.data.endereco) {
+          console.log("Endereço encontrado:", response.data.endereco);
+          setEnderecos([response.data.endereco]); // Define o endereço no estado como um array
+          setDialogEscolherEnderecoOpen(true); // Abre o diálogo de escolha de endereços
+        } else {
+          console.log(
+            "Nenhum endereço encontrado. Abrindo cadastro de endereço."
+          );
+          setDialogEnderecoOpen(true); // Abre o diálogo de cadastro de endereço
+        }
+      } catch (error) {
+        console.error("Erro ao verificar o endereço:", error);
+        alert("Ocorreu um erro ao verificar o endereço. Tente novamente.");
+      }
+    };
+
+
+
+
+
+
+
+
   useEffect(() => {
+    // Define o userId ao montar o componente
+    const id = gerarTokerDescrip();
+    if (id) {
+      setUserId(id);
+    }
     fetchProdutos();
   }, []);
 
@@ -222,8 +300,8 @@ export default function SectionPedidos() {
           }}
         >
           <SelectValores texto={"Selecione o tamanho"} />
-          <SelectValores texto={"Selecione o Sabor"} />
           <SelectValores texto={"Escolher Borda recheada"} />
+          <ButtonMaterialUi texto={"selecionar bebida"} bg={"#B72A23"} />
         </Box>
 
         <Box
@@ -248,125 +326,91 @@ export default function SectionPedidos() {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                width: "300px",
-                height: "300px",
-                borderRadius: "50%",
-                position: "relative",
-                overflow: "hidden",
+                width: "400px", // Largura fixa para garantir que o contêiner seja quadrado
+                height: "400px", // Altura igual à largura
+                borderRadius: "50%", // Garante o formato circular
+                position: "relative", // Permite posicionar elementos sobrepostos
+                overflow: "hidden", // Garante que os elementos fiquem dentro do círculo
+                maxWidth: "100%", // Garante que a largura não ultrapasse o contêiner pai
+                maxHeight: "100%", // Garante que a altura não ultrapasse o contêiner pai
               }}
             >
-              {/* Linha divisória */}
+              {/* Metade esquerda */}
               <Box
                 sx={{
-                  position: "absolute",
-                  width: "2px",
-                  height: "100%",
-                  backgroundColor: "black",
-                  top: 0,
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  zIndex: 2,
-                  overflow: "hidden",
-                }}
-              />
-
-              <Box
-                sx={{
-                  height: "250px",
-                  width: "250px",
+                  width: "50%", // Ocupa metade da largura
+                  height: "100%", // Ocupa toda a altura
+                  position: "relative", // Permite sobreposição
                   display: "flex",
-                  justifyContent: "center",
+                  justifyContent: "flex-end", // Alinha a pizza para a borda direita
                 }}
+                onClick={() => handleMetadeClick("esquerda")}
               >
-                {/* Metade esquerda */}
+                {/* Tábua da metade esquerda */}
                 <Box
-                  onClick={() => handleMetadeClick("esquerda")}
-                  sx={
-                    {
-                      // clipPath: "polygon(0 0, 50% 0, 50% 100%, 0 100%)",
-                    }
-                  }
-                >
-                  <img
-                    style={{
-                      height: "150px",
-                      // width: "150px",
+                  sx={{
+                    width: "100%",
+                    height: "94%",
+                    backgroundImage: `url(/img/tabua_pizzaEsq.png)`, // Imagem da tábua esquerda
+                    backgroundSize: "cover", // Garante que a imagem ocupe todo o espaço
+                    backgroundRepeat: "no-repeat", // Evita repetição da imagem
+                    backgroundPosition: "center",
+                  }}
+                />
+                {/* Pizza da metade esquerda */}
+                {saborEsquerda && (
+                  <Box
+                    sx={{
+                      width: "85%", // Reduz o tamanho da pizza para 85% da largura da tábua
+                      height: "85%", // Reduz o tamanho da pizza para 85% da altura da tábua
+                      backgroundImage: `url(/img/mussarela_esq.png)`, // Imagem da pizza esquerda
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      position: "absolute", // Sobrepõe a tábua
+                      top: "4%", // Centraliza verticalmente
+                      // right: "-2%", // Cola a pizza no centro
                     }}
-                    src={
-                      saborEsquerda
-                        ? `/img/${saborEsquerda.imagem}`
-                        : TabuaPizza
-                    }
-                    alt=""
                   />
-                </Box>
+                )}
+              </Box>
 
+              {/* Metade direita */}
+              <Box
+                sx={{
+                  width: "50%", // Ocupa metade da largura
+                  height: "100%", // Ocupa toda a altura
+                  position: "relative", // Permite sobreposição
+                  display: "flex",
+                  justifyContent: "flex-start", // Alinha a pizza para a borda esquerda
+                }}
+                onClick={() => handleMetadeClick("direita")}
+              >
+                {/* Tábua da metade direita */}
                 <Box
-                  sx={
-                    {
-                      // clipPath: "polygon(50% 0, 100% 0, 100% 100%, 50% 100%)",
-                    }
-                  }
-                >
-                  <img
-                    style={{
-                      height: "150px",
-                      // transform: "rotateY(180deg)",
-                      transform: "rotateY(180deg) rotateX(180deg)",
-                      // width: "150px",
+                  sx={{
+                    width: "100%",
+                    height: "94%",
+                    backgroundImage: `url(/img/tabua_pizzaDir.png)`, // Imagem da tábua direita
+                    backgroundSize: "cover", // Garante que a imagem ocupe todo o espaço
+                    backgroundRepeat: "no-repeat", // Evita repetição da imagem
+                    backgroundPosition: "center",
+                  }}
+                />
+                {/* Pizza da metade direita */}
+                {saborDireita && (
+                  <Box
+                    sx={{
+                      width: "85%", // Reduz o tamanho da pizza para 85% da largura da tábua
+                      height: "85%", // Reduz o tamanho da pizza para 85% da altura da tábua
+                      backgroundImage: `url(/img/mussarela_dir.png)`, // Imagem da pizza direita
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      position: "absolute", // Sobrepõe a tábua
+                      top: "4%", // Centraliza verticalmente
+                      // left: "%", // Cola a pizza no centro
                     }}
-                    onClick={() => handleMetadeClick("direita")}
-                    src={
-                      saborDireita ? `/img/${saborEsquerda.imagem}` : TabuaPizza
-                    }
-                    alt=""
                   />
-                </Box>
-
-                {/* <Box
-                  sx={{
-                    width: "50%",
-                    height: "100%",
-                    backgroundImage: saborEsquerda
-                      ? `url("/img/${saborEsquerda.imagem}")`
-                      : 'url("/img/tabua_pizza.png")',
-                    backgroundSize: saborEsquerda ? "50%" : "cover", // <-- aqui o ajuste!
-                    backgroundRepeat: "no-repeat", // impede repetição
-                    backgroundPosition: "left",
-                    clipPath: "polygon(0 0, 50% 0, 50% 100%, 0 100%)",
-                    transition: "transform 0.3s ease",
-                    cursor: "pointer",
-                    // "&:hover": {
-                    //   transform: "scale(1.05)",
-                    //   zIndex: 1,
-                    // },
-                  }}
-                  onClick={() => handleMetadeClick("esquerda")}
-                /> */}
-                {/* Metade direita */}
-
-                {/* <Box
-                  sx={{
-                    width: "50%",
-                    height: "100%",
-                    backgroundImage: saborDireita
-                      ? `url("/img/${saborDireita.imagem}")`
-                      : 'url("/img/tabua_pizza.png")',
-                    backgroundSize: saborDireita ? "50%" : "cover",
-                    backgroundRepeat: "no-repeat",
-                    transform: "rotateY(180deg)",
-                    transition: "transform 0.3s ease",
-                    cursor: "pointer",
-                    // backgroundPosition: saborDireita ? "left" : "center",
-                    // transform: saborEsquerda ? "rotate(180deg)" : "none",
-                    // clipPath: "polygon(50% 0, 100% 0, 100% 100%, 50% 100%)",
-                    // "&:hover": {
-                    //   transform: "scale(1.05)",
-                    //   zIndex: 1,
-                    // },
-                  }}
-                  onClick={() => handleMetadeClick("direita")}
-                /> */}
+                )}
               </Box>
             </Box>
           </Tooltip>
@@ -517,6 +561,7 @@ export default function SectionPedidos() {
               texto={"Finalizar Pedido"}
               bg={"#B72A23"}
               disabled={pizzasSelecionadas.length === 0}
+              onClick={verificarEndereco}
             />
           </Box>
         </Box>
@@ -629,6 +674,35 @@ export default function SectionPedidos() {
         </DialogActions>
       </Dialog>
 
+      <Dialog
+        open={dialogEnderecoOpen}
+        onClose={() => setDialogEnderecoOpen(false)}
+        fullWidth
+        maxWidth="sm"
+        sx={{
+          "& .MuiDialog-paper": {
+            width: "100%",
+            height: "90vh",
+            display: "flex",
+            flexDirection: "column",
+          },
+        }}
+      >
+        <DialogTitle>Cadastrar Endereço</DialogTitle>
+        <DialogContent
+          sx={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            padding: "16px",
+            overflowY: "auto",
+          }}
+        >
+          {userId && (
+            <CadastroEndereco userId={userId} /> 
+          )}
+        </DialogContent>
+      </Dialog>
       <Box
         sx={{
           boxSizing: "border-box",
@@ -646,6 +720,26 @@ export default function SectionPedidos() {
           color={"red"}
         />
       </Box>
+
+      <Dialog
+        open={dialogEscolherEnderecoOpen}
+        onClose={() => setDialogEscolherEnderecoOpen(false)}
+        fullWidth
+        maxWidth="sm"
+      >
+        <DialogTitle>Escolher Endereço</DialogTitle>
+        <DialogContent>
+          <EscolherEndereco
+            enderecos={enderecos} // Passa o estado enderecos diretamente
+            userId={userId} // Passa o userId como prop
+            onSelecionarEndereco={(endereco) => {
+              console.log("Endereço escolhido no diálogo:", endereco);
+              setDialogEscolherEnderecoOpen(false); // Fecha o diálogo após a seleção
+            }}
+            onClose={() => setDialogEscolherEnderecoOpen(false)}
+          />
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 }

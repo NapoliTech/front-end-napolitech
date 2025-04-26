@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
 import Nav from "../molecules/Nav";
-import SectionPedidos from "../molecules/sectionPedidos";
+import SectionPedidos from "../organisms/SectionPedidos";
 
 export default function Pedidos() {
   return (
