@@ -1,23 +1,24 @@
 import { Box } from '@mui/material';
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // Importa o hook useNavigate
 
-export default function Nav({ backgroundColor, padding, height, position, left }) {
+export default function Nav({ backgroundColor, padding, position, left }) {
+  const navigate = useNavigate(); // Inicializa o hook useNavigate
+
   return (
     <Box
       component="nav"
       sx={{
         position: position,
         left: left,
-        width: "100vw",
+        width: "99vw",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         padding: padding,
-        zIndex: 10, 
-
+        zIndex: 10,
         backgroundColor: backgroundColor,
         color: "#FFF",
-        height: height,
       }}
     >
       <Box
@@ -27,12 +28,21 @@ export default function Nav({ backgroundColor, padding, height, position, left }
           width: "100%",
           justifyContent: "center",
           alignItems: "center",
+          "& > div": {
+            height: "20%", 
+          },
         }}
       >
-        <a href="#contact" style={{ color: "#FFF", textDecoration: "none" }}>
+        <a
+          onClick={() => navigate('/')} // Redireciona para a home
+          style={{ color: "#FFF", textDecoration: "none", cursor: "pointer" }}
+        >
           Cardapio
         </a>
-        <a href="#contact" style={{ color: "#FFF", textDecoration: "none" }}>
+        <a
+          onClick={() => navigate('/')} // Redireciona para a home
+          style={{ color: "#FFF", textDecoration: "none", cursor: "pointer" }}
+        >
           Fale conosco
         </a>
       </Box>
@@ -40,10 +50,12 @@ export default function Nav({ backgroundColor, padding, height, position, left }
       <Box
         sx={{
           display: "flex",
-          gap: "43px",
-          width: "100%",
+          width: "80%",
           justifyContent: "center",
           alignItems: "center",
+          boxSizing: 'border-box',
+          margin: '0',
+          padding: '0'
         }}
       >
         <img
@@ -65,10 +77,16 @@ export default function Nav({ backgroundColor, padding, height, position, left }
           alignItems: "center",
         }}
       >
-        <a href="#about" style={{ color: "#FFF", textDecoration: "none" }}>
+        <a
+          onClick={() => navigate('/login')} // Redireciona para a página de login
+          style={{ color: "#FFF", textDecoration: "none", cursor: "pointer" }}
+        >
           Entrar
         </a>
-        <a href="#contact" style={{ color: "#FFF", textDecoration: "none" }}>
+        <a
+          onClick={() => navigate('/pedidos')} // Redireciona para a página de pedidos
+          style={{ color: "#FFF", textDecoration: "none", cursor: "pointer" }}
+        >
           Carinho
         </a>
       </Box>

@@ -5,6 +5,26 @@ import { Cadastro } from "./components/organisms/Cadastro";
 import { Home } from "./components/pages/Home";
 import Pedidos from "./components/pages/pedidos";
 import Atendimento from "./components/pages/Atendimento";
+import FinalizarPedido from "./components/pages/FinalizarPedido";
+import NavPedidos from "./components/molecules/NavPedidos";
+
+// Layout compartilhado para /pedidos e /finalizarPedido
+const LayoutNavPedido = ({ children }) => (
+  <div style={{ position: "relative", minHeight: "100vh" }}>
+    {/* Renderiza a NavPedidos no topo */}
+    <NavPedidos
+      backgroundColor="#B72A23"
+      // padding="10px"
+      // height="100px"
+      position="absolute" // Mantém o position absoluto
+      // left="0"
+    />
+    {/* Compensa a altura da NavPedidos */}
+    <div >
+      {children}
+    </div>
+  </div>
+);
 
 export const routes = createBrowserRouter([
   {
@@ -28,8 +48,21 @@ export const routes = createBrowserRouter([
     ),
   },
   { path: "/", element: <Home /> },
-  { path: "/pedidos", element: <Pedidos /> },
+  {
+    path: "/pedidos",
+    element: (
+      <LayoutNavPedido>
+        <Pedidos />
+      </LayoutNavPedido>
+    ),
+  },
+  {
+    path: "/finalizarPedido",
+    element: (
+      <LayoutNavPedido>
+        <FinalizarPedido />
+      </LayoutNavPedido>
+    ),
+  },
   { path: "/atendimento", element: <Atendimento /> },
-  { path: "/", element: <Atendimento /> },
-
 ]);

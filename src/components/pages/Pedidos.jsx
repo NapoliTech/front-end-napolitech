@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import React from "react";
-import Nav from "../molecules/Nav";
 import SectionPedidos from "../organisms/SectionPedidos";
 
 export default function Pedidos() {
@@ -11,9 +10,9 @@ export default function Pedidos() {
         height: "100%",
         display: "flex",
         flexDirection: "column",
+        overflow: 'hidden'
       }}
     >
-      <Nav backgroundColor={"#B72A23"} padding={"0px"} height={"60px"} />
       <SectionPedidos />
     </Box>
   );

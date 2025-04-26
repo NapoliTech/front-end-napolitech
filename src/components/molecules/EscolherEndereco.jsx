@@ -1,9 +1,27 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; // Adicione o useState aqui
 import { Dialog, DialogTitle, DialogContent, Button, Box, Typography, Stack } from "@mui/material";
-import CadastroEndereco from "./CadastroEndereco"; // Certifique-se de importar o componente de cadastro
+import { useNavigate } from "react-router-dom";
+import CadastroEndereco from "./CadastroEndereco";
 
-export default function EscolherEndereco({ enderecos, onSelecionarEndereco, onClose, userId }) {
+export default function EscolherEndereco({ enderecos, onSelecionarEndereco, onClose, userId, pizzasSelecionadas, idsPizzasSelecionadas }) {
   const [mostrarCadastro, setMostrarCadastro] = useState(false); // Alterna entre lista e cadastro
+  const navigate = useNavigate(); // Hook para redirecionamento
+
+  const handleSelecionarEndereco = (endereco) => {
+    console.log("Endereço selecionado:", endereco);
+    console.log("Pizzas selecionadas antes de redirecionar:", pizzasSelecionadas);
+    console.log("IDs das pizzas selecionadas:", idsPizzasSelecionadas);
+
+    // Redireciona para a página de finalizar pedido com os dados necessários
+    navigate("/finalizarPedido", {
+      state: {
+        userId,
+        enderecoSelecionado: endereco,
+        pizzasSelecionadas, // Passa as pizzas selecionadas
+        idsPizzasSelecionadas, // Passa os IDs das pizzas selecionadas
+      },
+    });
+  };
 
   return (
     <Dialog
@@ -44,7 +62,7 @@ export default function EscolherEndereco({ enderecos, onSelecionarEndereco, onCl
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={() => onSelecionarEndereco(endereco)}
+                      onClick={() => handleSelecionarEndereco(endereco)} // Redireciona ao selecionar
                       sx={{ marginTop: "8px" }}
                     >
                       Selecionar

@@ -6,23 +6,16 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import { Carrossel } from "./Carrossel";
 import Button from "@mui/material/Button";
 import { TituloH2 } from "../atoms/TituloH2";
-import axios from "axios";
 import Nav from "../molecules/Nav";
+import { useNavigate } from "react-router-dom"; 
 export default function HeaderMUI() {
+  const navigate = useNavigate();
   const images = [
     { src: "/img/img_1_home.jpg", alt: "Background bem vindo" },
     { src: "/img/bg-pizzaMesa.jpg", alt: "Background bem vindo" },
   ];
 
   // Função para listar músicas
-  const listarMusicas = async () => {
-    try {
-      const resposta = await axios.get("http://localhost:8080/api/produtos");
-      console.log(resposta.data);
-    } catch (error) {
-      console.error("Erro ao buscar produto:", error.message);
-    }
-  };
 
   return (
     <header
@@ -94,7 +87,7 @@ export default function HeaderMUI() {
             borderRadius: "10px",
             maxWidth: "150px",
           }}
-          onClick={listarMusicas}
+          onClick={() => navigate("/pedidos")}
         >
           Peça Já
         </Button>

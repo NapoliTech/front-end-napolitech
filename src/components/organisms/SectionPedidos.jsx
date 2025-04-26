@@ -30,6 +30,7 @@ import { api } from "../../provider/apiInstance";
 import { jwtDecode } from "jwt-decode";
 import CadastroEndereco from "../molecules/CadastroEndereco";
 import EscolherEndereco from "../molecules/EscolherEndereco";
+import { useNavigate } from "react-router-dom";
 
 export default function SectionPedidos() {
   const [tooltipOpen, setTooltipOpen] = useState(true);
@@ -46,6 +47,25 @@ export default function SectionPedidos() {
   const [dialogEscolherEnderecoOpen, setDialogEscolherEnderecoOpen] =
     useState(false);
   const [userId, setUserId] = useState(null); // Estado para armazenar o ID do usuário
+  const navigate = useNavigate();
+  const [idsPizzasSelecionadas, setIdsPizzasSelecionadas] = useState([]);
+
+  const handleSelecionarEndereco = (endereco) => {
+    console.log("Endereço selecionado:", endereco);
+    console.log(
+      "Pizzas selecionadas antes de redirecionar:",
+      pizzasSelecionadas
+    );
+  
+    navigate("/finalizarPedido", {
+      state: {
+        userId,
+        enderecoSelecionado: endereco,
+        pizzasSelecionadas, // Passa as pizzas selecionadas
+        idsPizzasSelecionadas, // Passa os IDs das pizzas selecionadas
+      },
+    });
+  };
 
   const fetchProdutos = async () => {
     try {
@@ -89,44 +109,33 @@ export default function SectionPedidos() {
     }
   };
 
-
-
-
-
-    const verificarEndereco = async () => {
-      console.log("Botão clicado, função verificarEndereco chamada");
-      try {
-        if (!userId) {
-          return; // Interrompe a execução se o userId não for válido
-        }
-
-        // Faz a requisição para a API usando o ID do usuário
-        const response = await api.get(`/api/enderecos/${userId}`);
-        console.log("Resposta da API:", response.data);
-
-        // Verifica se há um endereço cadastrado
-        if (response.data && response.data.endereco) {
-          console.log("Endereço encontrado:", response.data.endereco);
-          setEnderecos([response.data.endereco]); // Define o endereço no estado como um array
-          setDialogEscolherEnderecoOpen(true); // Abre o diálogo de escolha de endereços
-        } else {
-          console.log(
-            "Nenhum endereço encontrado. Abrindo cadastro de endereço."
-          );
-          setDialogEnderecoOpen(true); // Abre o diálogo de cadastro de endereço
-        }
-      } catch (error) {
-        console.error("Erro ao verificar o endereço:", error);
-        alert("Ocorreu um erro ao verificar o endereço. Tente novamente.");
+  const verificarEndereco = async () => {
+    console.log("Botão clicado, função verificarEndereco chamada");
+    try {
+      if (!userId) {
+        return; // Interrompe a execução se o userId não for válido
       }
-    };
 
+      // Faz a requisição para a API usando o ID do usuário
+      const response = await api.get(`/api/enderecos/${userId}`);
+      console.log("Resposta da API:", response.data);
 
-
-
-
-
-
+      // Verifica se há um endereço cadastrado
+      if (response.data && response.data.endereco) {
+        console.log("Endereço encontrado:", response.data.endereco);
+        setEnderecos([response.data.endereco]); // Define o endereço no estado como um array
+        setDialogEscolherEnderecoOpen(true); // Abre o diálogo de escolha de endereços
+      } else {
+        console.log(
+          "Nenhum endereço encontrado. Abrindo cadastro de endereço."
+        );
+        setDialogEnderecoOpen(true); // Abre o diálogo de cadastro de endereço
+      }
+    } catch (error) {
+      console.error("Erro ao verificar o endereço:", error);
+      alert("Ocorreu um erro ao verificar o endereço. Tente novamente.");
+    }
+  };
 
   useEffect(() => {
     // Define o userId ao montar o componente
@@ -175,7 +184,7 @@ export default function SectionPedidos() {
   const adicionarSaborMetade = (produto) => {
     if (metadeSelecionada === "esquerda") {
       setSaborEsquerda({
-        id: Date.now(),
+        id: produto.id, // Usa o ID real do produto retornado pela API
         sabor: produto.nome,
         texto: produto.descricao || "Ingredientes não especificados",
         preco: (produto.preco / 2).toFixed(2), // Metade do preço para meia pizza
@@ -183,33 +192,41 @@ export default function SectionPedidos() {
       });
     } else if (metadeSelecionada === "direita") {
       setSaborDireita({
-        id: Date.now(),
+        id: produto.id, // Usa o ID real do produto retornado pela API
         sabor: produto.nome,
         texto: produto.descricao || "Ingredientes não especificados",
         preco: (produto.preco / 2).toFixed(2), // Metade do preço para meia pizza
         imagem: "meia_pizza_frango_com_catupiry.png", // Imagem da metade direita
       });
     }
-
+  
     setDialogOpen(false);
     setSearchTerm("");
     setMetadeSelecionada(null);
   };
 
+
+
+
+
+
+
+
+
   function adicionarPizzaAoPedido() {
     console.log("Função adicionarPizzaAoPedido chamada");
     console.log("Sabor Esquerda:", saborEsquerda);
     console.log("Sabor Direita:", saborDireita);
-
+  
     if (saborEsquerda && saborDireita) {
       const precoTotal = (
         parseFloat(saborEsquerda.preco) + parseFloat(saborDireita.preco)
       ).toFixed(2);
-
+  
       console.log("Preço total calculado:", precoTotal);
-
+  
       const novaPizza = {
-        id: Date.now(),
+        id: Date.now(), // ID único para a pizza
         metades: [
           {
             lado: "esquerda",
@@ -217,6 +234,7 @@ export default function SectionPedidos() {
             texto: saborEsquerda.texto,
             preco: saborEsquerda.preco,
             imagem: saborEsquerda.imagem,
+            id: saborEsquerda.id, // ID real da metade esquerda
           },
           {
             lado: "direita",
@@ -224,25 +242,33 @@ export default function SectionPedidos() {
             texto: saborDireita.texto,
             preco: saborDireita.preco,
             imagem: saborDireita.imagem,
+            id: saborDireita.id, // ID real da metade direita
           },
         ],
         sabor: `Meia ${saborEsquerda.sabor} / Meia ${saborDireita.sabor}`,
         texto: `Pizza meio a meio`,
         preco: precoTotal,
       };
-
+  
       console.log("Nova pizza a ser adicionada:", novaPizza);
-
+  
       setPizzasSelecionadas((pizzasAtuais) => {
         const novaLista = [...pizzasAtuais, novaPizza];
         console.log("Nova lista de pizzas:", novaLista);
         return novaLista;
       });
-
+  
+      // Atualiza os IDs das pizzas selecionadas
+      setIdsPizzasSelecionadas((idsAtuais) => [
+        ...idsAtuais,
+        saborEsquerda.id,
+        saborDireita.id,
+      ]);
+  
       // Limpa as seleções após adicionar ao pedido
       setSaborEsquerda(null);
       setSaborDireita(null);
-
+  
       console.log("Seleções limpas");
     } else {
       // Se apenas uma metade foi selecionada
@@ -251,6 +277,12 @@ export default function SectionPedidos() {
       );
     }
   }
+
+    useEffect(() => {
+    console.log("IDs das pizzas selecionadas:", idsPizzasSelecionadas);
+  }, [idsPizzasSelecionadas]);
+
+
 
   // Função para calcular o valor total do pedido
   const calcularTotal = () => {
@@ -269,7 +301,7 @@ export default function SectionPedidos() {
         height: "90vh",
         boxSizing: "border-box",
         overflowX: "hidden",
-        overflowY: "auto",
+        overflowY: "hidden",
       }}
     >
       <Stack
@@ -698,9 +730,7 @@ export default function SectionPedidos() {
             overflowY: "auto",
           }}
         >
-          {userId && (
-            <CadastroEndereco userId={userId} /> 
-          )}
+          {userId && <CadastroEndereco userId={userId} />}
         </DialogContent>
       </Dialog>
       <Box
@@ -713,13 +743,7 @@ export default function SectionPedidos() {
           textOverflow: "ellipsis",
           backgroundColor: "#DFDDD8",
         }}
-      >
-        <TituloH2
-          text={"* AMOR POR ENTREGAR* * AMOR POR PIZZA*  * AMOR POR ENTREGAR*"}
-          fontSize={"70px"}
-          color={"red"}
-        />
-      </Box>
+      ></Box>
 
       <Dialog
         open={dialogEscolherEnderecoOpen}
@@ -732,10 +756,9 @@ export default function SectionPedidos() {
           <EscolherEndereco
             enderecos={enderecos} // Passa o estado enderecos diretamente
             userId={userId} // Passa o userId como prop
-            onSelecionarEndereco={(endereco) => {
-              console.log("Endereço escolhido no diálogo:", endereco);
-              setDialogEscolherEnderecoOpen(false); // Fecha o diálogo após a seleção
-            }}
+            pizzasSelecionadas={pizzasSelecionadas} // Passa as pizzas selecionadas
+            onSelecionarEndereco={handleSelecionarEndereco} // Redireciona ao selecionar
+            idsPizzasSelecionadas={idsPizzasSelecionadas}
             onClose={() => setDialogEscolherEnderecoOpen(false)}
           />
         </DialogContent>
