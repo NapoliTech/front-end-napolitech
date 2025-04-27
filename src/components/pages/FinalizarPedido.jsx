@@ -237,6 +237,8 @@ export default function FinalizarPedido() {
             backgroundColor: "#197824",
             color: "#fff",
             padding: "10px 20px",
+            height: 'auto',
+            width: 'auto'
           }}
           onClick={finalizarPedido} // Chama a função para finalizar o pedido
         >

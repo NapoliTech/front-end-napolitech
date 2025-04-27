@@ -3,7 +3,7 @@ import { Dialog, DialogTitle, DialogContent, Button, Box, Typography, Stack } fr
 import { useNavigate } from "react-router-dom";
 import CadastroEndereco from "./CadastroEndereco";
 
-export default function EscolherEndereco({ enderecos, onSelecionarEndereco, onClose, userId, pizzasSelecionadas, idsPizzasSelecionadas }) {
+export default function EscolherEndereco({ enderecos,  onClose, userId, pizzasSelecionadas, idsPizzasSelecionadas }) {
   const [mostrarCadastro, setMostrarCadastro] = useState(false); // Alterna entre lista e cadastro
   const navigate = useNavigate(); // Hook para redirecionamento
 
