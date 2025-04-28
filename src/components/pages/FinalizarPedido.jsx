@@ -51,16 +51,15 @@ export default function FinalizarPedido() {
     }
   };
 
-  // Função para enviar o pedido para a API
   const finalizarPedido = async () => {
-    // Monta o payload no formato esperado pela API
     const payload = {
       clienteId: userId,
       itens: idsPizzasSelecionadas.map((id) => ({
         produto: id,
-        quantidade: 1, // Define a quantidade como 1 para cada item
+        quantidade: 1, 
+        categoriaProduto: 'PIZZA'
       })),
-      observacao: observacao || "", // Adiciona a observação, se houver
+      observacao: observacao || "", 
     };
 
     console.log("Payload enviado para a API:", payload);
