@@ -7,6 +7,8 @@ import Pedidos from "./components/pages/pedidos";
 import Atendimento from "./components/pages/Atendimento";
 import FinalizarPedido from "./components/pages/FinalizarPedido";
 import NavPedidos from "./components/molecules/NavPedidos";
+import PedidoConcluido from "./components/pages/PedidoConcluido";
+
 
 // Layout compartilhado para /pedidos e /finalizarPedido
 const LayoutNavPedido = ({ children }) => (
@@ -61,6 +63,14 @@ export const routes = createBrowserRouter([
     element: (
       <LayoutNavPedido>
         <FinalizarPedido />
+      </LayoutNavPedido>
+    ),
+  },
+  {
+    path: "/pedidoConcluido",
+    element: (
+      <LayoutNavPedido>
+        <PedidoConcluido />
       </LayoutNavPedido>
     ),
   },

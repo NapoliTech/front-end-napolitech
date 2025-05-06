@@ -82,6 +82,8 @@ export default function SectionPedidos() {
     }
   };
 
+  console.log(localStorage.getItem('token'))
+
   const gerarTokerDescrip = () => {
     const token = localStorage.getItem("token"); // Obtém o token do localStorage
     if (!token) {

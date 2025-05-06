@@ -1,6 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Box, Card, CardContent, Typography, CardHeader, FormControlLabel, Checkbox, Divider, TextField, Button } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  CardHeader,
+  FormControlLabel,
+  Checkbox,
+  Divider,
+  TextField,
+  Button,
+  Modal,
+} from "@mui/material";
 import { api } from "../../provider/apiInstance";
 
 export default function FinalizarPedido() {
@@ -8,7 +20,7 @@ export default function FinalizarPedido() {
   const navigate = useNavigate();
 
   // Recupera os dados passados via state ou define valores padrão
-  const { userId, enderecoSelecionado, pizzasSelecionadas = [], idsPizzasSelecionadas = [] } = location.state || {};
+  const { userId, enderecoSelecionado, pizzasSelecionadas = [] } = location.state || {};
 
   // Estado para os checkboxes
   const [isEntrega, setIsEntrega] = useState(false);
@@ -17,14 +29,19 @@ export default function FinalizarPedido() {
   // Estado para a observação
   const [observacao, setObservacao] = useState("");
 
+  // Estado para o modal
+  const [modalOpen, setModalOpen] = useState(false);
+
+  // Estado para armazenar o payload do pedido
+  const [pedidoPayload, setPedidoPayload] = useState(null);
+
   // Adiciona logs para verificar os dados recebidos
   useEffect(() => {
     console.log("Dados recebidos na página FinalizarPedido:");
     console.log("userId:", userId);
     console.log("Endereço selecionado:", enderecoSelecionado);
     console.log("Pizzas selecionadas:", pizzasSelecionadas);
-    console.log("IDs das pizzas selecionadas:", idsPizzasSelecionadas); // Log dos IDs
-  }, [userId, enderecoSelecionado, pizzasSelecionadas, idsPizzasSelecionadas]);
+  }, [userId, enderecoSelecionado, pizzasSelecionadas]);
 
   // Redireciona para a página inicial se os dados necessários não estiverem disponíveis
   if (!userId || !enderecoSelecionado) {
@@ -54,12 +71,14 @@ export default function FinalizarPedido() {
   const finalizarPedido = async () => {
     const payload = {
       clienteId: userId,
-      itens: idsPizzasSelecionadas.map((id) => ({
-        produto: id,
-        quantidade: 1, 
-        categoriaProduto: 'PIZZA'
+      itens: pizzasSelecionadas.map((pizza) => ({
+        produto: pizza.metades.map((metade) => metade.id), // IDs das duas metades
+        quantidade: 1,
+        bordaRecheada: "CATUPIRY", // Pode ser dinâmico, se necessário
+        tamanhoPizza: "MEIO_A_MEIO", // Pode ser dinâmico, se necessário
       })),
-      observacao: observacao || "", 
+      observacao: observacao || "",
+      tipoEntrega: isEntrega ? "ENTREGA" : "RETIRADA", // Define o tipo de entrega dinamicamente
     };
 
     console.log("Payload enviado para a API:", payload);
@@ -67,8 +86,8 @@ export default function FinalizarPedido() {
     try {
       const response = await api.post("/api/pedidos", payload);
       console.log("Pedido enviado com sucesso:", response.data);
-      alert("Pedido finalizado com sucesso!");
-      navigate("/"); // Redireciona para a página inicial
+      setPedidoPayload(payload); // Armazena o payload no estado
+      setModalOpen(true); // Abre o modal ao concluir o pedido
     } catch (error) {
       console.error("Erro ao enviar o pedido:", error);
       alert("Erro ao finalizar o pedido. Tente novamente.");
@@ -90,42 +109,41 @@ export default function FinalizarPedido() {
         {/* Card para informações do pedido */}
         <Box
           sx={{
-            width: "50%", // Ocupa metade da tela
+            width: "50%",
             display: "flex",
             flexDirection: "column",
-            alignItems: "center", // Centraliza o conteúdo horizontalmente
-            marginTop: "24px", // Adiciona 24px de espaço abaixo da Nav
+            alignItems: "center",
+            marginTop: "24px",
           }}
         >
           <Card
             sx={{
-              width: "90%", // Ocupa 90% da largura disponível
-              maxWidth: "600px", // Limita a largura máxima
-              height: "auto", // Altura dinâmica baseada no conteúdo
+              width: "90%",
+              maxWidth: "600px",
+              height: "auto",
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
               boxShadow: 3,
-              border: "1px solid #ddd", // Adiciona borda ao card
+              border: "1px solid #ddd",
             }}
           >
-            {/* Cabeçalho do cartão */}
             <CardHeader
               title="Seu Pedido"
               sx={{
-                backgroundColor: "#B72A23", // Fundo vermelho
-                color: "#fff", // Texto branco
-                textAlign: "center", // Centraliza o texto
+                backgroundColor: "#B72A23",
+                color: "#fff",
+                textAlign: "center",
                 padding: "16px",
                 fontSize: "1.5rem",
               }}
             />
             <CardContent
               sx={{
-                padding: "16px", // Ajusta o espaçamento interno
+                padding: "16px",
                 display: "flex",
                 flexDirection: "column",
-                gap: "12px", // Espaçamento entre os elementos
+                gap: "12px",
               }}
             >
               <Typography variant="subtitle1">
@@ -154,11 +172,7 @@ export default function FinalizarPedido() {
                 <strong>Total:</strong> R$ {calcularTotal()}
               </Typography>
             </CardContent>
-            <Box
-              sx={{
-                padding: "16px",
-              }}
-            >
+            <Box sx={{ padding: "16px" }}>
               <TextField
                 label="Adicionar Observação"
                 multiline
@@ -175,24 +189,23 @@ export default function FinalizarPedido() {
         {/* Divisória e checkboxes */}
         <Box
           sx={{
-            width: "50%", // Ocupa a outra metade da tela
+            width: "50%",
             display: "flex",
             flexDirection: "column",
-            justifyContent: "flex-start", // Alinha ao topo
-            alignItems: "flex-start", // Alinha os checkboxes à esquerda
-            marginTop: "24px", // Alinha com o topo do card
-            paddingLeft: "32px", // Adiciona espaçamento à esquerda
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
+            marginTop: "24px",
+            paddingLeft: "32px",
           }}
         >
-          {/* Linha divisória */}
           <Divider
             orientation="vertical"
             flexItem
             sx={{
               position: "absolute",
               left: "50%",
-              height: "500px", // Ajusta a altura para corresponder ao card
-              backgroundColor: "#000", // Cor preta
+              height: "500px",
+              backgroundColor: "#000",
               width: "2px",
             }}
           />
@@ -223,11 +236,11 @@ export default function FinalizarPedido() {
       </Box>
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'flex-start',
-          width: '100%',
-          paddingTop: '16px',
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "flex-start",
+          width: "100%",
+          paddingTop: "16px",
         }}
       >
         <Button
@@ -236,14 +249,55 @@ export default function FinalizarPedido() {
             backgroundColor: "#197824",
             color: "#fff",
             padding: "10px 20px",
-            height: 'auto',
-            width: 'auto'
+            height: "auto",
+            width: "auto",
           }}
-          onClick={finalizarPedido} // Chama a função para finalizar o pedido
+          onClick={finalizarPedido}
         >
           Finalizar Pedido
         </Button>
       </Box>
+
+      {/* Modal de Pedido Concluído */}
+      <Modal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+            borderRadius: 2,
+          }}
+        >
+          <Typography id="modal-title" variant="h6" component="h2" gutterBottom>
+            Pedido Concluído com Sucesso!
+          </Typography>
+          <Typography id="modal-description" sx={{ mb: 2 }}>
+            Seu pedido foi finalizado com sucesso. Clique no botão abaixo para visualizar os detalhes.
+          </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              setModalOpen(false);
+              navigate("/pedidoConcluido", { state: { pedido: pedidoPayload } }); // Envia o payload para a página de Pedido Concluído
+            }}
+            fullWidth
+          >
+            Ver Pedido
+          </Button>
+        </Box>
+      </Modal>
     </Box>
   );
 }
