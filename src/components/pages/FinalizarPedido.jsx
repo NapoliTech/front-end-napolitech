@@ -20,7 +20,14 @@ export default function FinalizarPedido() {
   const navigate = useNavigate();
 
   // Recupera os dados passados via state ou define valores padrão
-  const { userId, enderecoSelecionado, pizzasSelecionadas = [] } = location.state || {};
+  const {
+    userId,
+    enderecoSelecionado,
+    pizzasSelecionadas = [],
+    tamanhoSelecionado,
+    bordaSelecionada,
+  } = location.state || {};
+
 
   // Estado para os checkboxes
   const [isEntrega, setIsEntrega] = useState(false);
@@ -74,11 +81,11 @@ export default function FinalizarPedido() {
       itens: pizzasSelecionadas.map((pizza) => ({
         produto: pizza.metades.map((metade) => metade.id), // IDs das duas metades
         quantidade: 1,
-        bordaRecheada: "CATUPIRY", // Pode ser dinâmico, se necessário
-        tamanhoPizza: "MEIO_A_MEIO", // Pode ser dinâmico, se necessário
+        bordaRecheada: bordaSelecionada,
+        tamanhoPizza: tamanhoSelecionado 
       })),
       observacao: observacao || "",
-      tipoEntrega: isEntrega ? "ENTREGA" : "RETIRADA", // Define o tipo de entrega dinamicamente
+      tipoEntrega: isEntrega ? "ENCOMENDA" : "RETIRADA",
     };
 
     console.log("Payload enviado para a API:", payload);

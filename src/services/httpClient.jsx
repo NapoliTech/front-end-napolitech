@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // eslint-disable-next-line no-undef
-const backendUrl = process.env.REACT_APP_BACKEND_URL;
+const backendUrl = process.env.VITE_ENDERECO_API;
 
 const httpClient = axios.create({
   baseURL: backendUrl,

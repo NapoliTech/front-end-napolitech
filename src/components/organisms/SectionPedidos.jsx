@@ -31,6 +31,7 @@ import { jwtDecode } from "jwt-decode";
 import CadastroEndereco from "../molecules/CadastroEndereco";
 import EscolherEndereco from "../molecules/EscolherEndereco";
 import { useNavigate } from "react-router-dom";
+import DialogoBebidas from "../molecules/DialogoBebidas";
 
 export default function SectionPedidos() {
   const [tooltipOpen, setTooltipOpen] = useState(true);
@@ -49,6 +50,21 @@ export default function SectionPedidos() {
   const [userId, setUserId] = useState(null); // Estado para armazenar o ID do usuário
   const navigate = useNavigate();
   const [idsPizzasSelecionadas, setIdsPizzasSelecionadas] = useState([]);
+  const [tamanhoSelecionado, setTamanhoSelecionado] = useState(""); // Estado para o tamanho
+  const [bordaSelecionada, setBordaSelecionada] = useState(""); // Estado para a borda
+  const [dialogBebidasOpen, setDialogBebidasOpen] = useState(false);
+  const [bebidas, setBebidas] = useState([]);
+
+  const bebidasMock = [
+    { id: 1, nome: "Coca-Cola", preco: 5.99 },
+    { id: 2, nome: "Guaraná", preco: 4.99 },
+    { id: 3, nome: "Água Mineral", preco: 2.99 },
+  ];
+
+  const handleAdicionarBebida = (bebida) => {
+    console.log("Bebida adicionada:", bebida);
+    setDialogBebidasOpen(false); // Fecha o diálogo após adicionar a bebida
+  };
 
   const handleSelecionarEndereco = (endereco) => {
     console.log("Endereço selecionado:", endereco);
@@ -56,7 +72,7 @@ export default function SectionPedidos() {
       "Pizzas selecionadas antes de redirecionar:",
       pizzasSelecionadas
     );
-  
+
     navigate("/finalizarPedido", {
       state: {
         userId,
@@ -73,7 +89,12 @@ export default function SectionPedidos() {
       console.log("Resposta da API:", response);
       if (Array.isArray(response.data)) {
         setProdutos(response.data);
-        setProdutosFiltrados(response.data);
+
+        // Filtra apenas os produtos com categoriaProduto = "REFRIGERANTE"
+        const bebidasFiltradas = response.data.filter(
+          (produto) => produto.categoriaProduto === "REFRIGERANTE"
+        );
+        setBebidas(bebidasFiltradas);
       } else {
         console.error("A resposta da API não é um array:", response.data);
       }
@@ -82,7 +103,7 @@ export default function SectionPedidos() {
     }
   };
 
-  console.log(localStorage.getItem('token'))
+  console.log(localStorage.getItem("token"));
 
   const gerarTokerDescrip = () => {
     const token = localStorage.getItem("token"); // Obtém o token do localStorage
@@ -201,32 +222,24 @@ export default function SectionPedidos() {
         imagem: "meia_pizza_frango_com_catupiry.png", // Imagem da metade direita
       });
     }
-  
+
     setDialogOpen(false);
     setSearchTerm("");
     setMetadeSelecionada(null);
   };
 
-
-
-
-
-
-
-
-
   function adicionarPizzaAoPedido() {
     console.log("Função adicionarPizzaAoPedido chamada");
     console.log("Sabor Esquerda:", saborEsquerda);
     console.log("Sabor Direita:", saborDireita);
-  
+
     if (saborEsquerda && saborDireita) {
       const precoTotal = (
         parseFloat(saborEsquerda.preco) + parseFloat(saborDireita.preco)
       ).toFixed(2);
-  
+
       console.log("Preço total calculado:", precoTotal);
-  
+
       const novaPizza = {
         id: Date.now(), // ID único para a pizza
         metades: [
@@ -251,26 +264,26 @@ export default function SectionPedidos() {
         texto: `Pizza meio a meio`,
         preco: precoTotal,
       };
-  
+
       console.log("Nova pizza a ser adicionada:", novaPizza);
-  
+
       setPizzasSelecionadas((pizzasAtuais) => {
         const novaLista = [...pizzasAtuais, novaPizza];
         console.log("Nova lista de pizzas:", novaLista);
         return novaLista;
       });
-  
+
       // Atualiza os IDs das pizzas selecionadas
       setIdsPizzasSelecionadas((idsAtuais) => [
         ...idsAtuais,
         saborEsquerda.id,
         saborDireita.id,
       ]);
-  
+
       // Limpa as seleções após adicionar ao pedido
       setSaborEsquerda(null);
       setSaborDireita(null);
-  
+
       console.log("Seleções limpas");
     } else {
       // Se apenas uma metade foi selecionada
@@ -280,11 +293,9 @@ export default function SectionPedidos() {
     }
   }
 
-    useEffect(() => {
+  useEffect(() => {
     console.log("IDs das pizzas selecionadas:", idsPizzasSelecionadas);
   }, [idsPizzasSelecionadas]);
-
-
 
   // Função para calcular o valor total do pedido
   const calcularTotal = () => {
@@ -333,9 +344,43 @@ export default function SectionPedidos() {
             height: "90%",
           }}
         >
-          <SelectValores texto={"Selecione o tamanho"} />
-          <SelectValores texto={"Escolher Borda recheada"} />
-          <ButtonMaterialUi texto={"selecionar bebida"} bg={"#B72A23"} />
+          <SelectValores
+            texto="Selecione o tamanho"
+            options={[{ value: "MEIO_A_MEIO", label: "Grande" }]}
+            onChange={(event) => {
+              setTamanhoSelecionado(event.target.value);
+              console.log(tamanhoSelecionado); // Verifica o valor selecionado
+            }}
+          />
+
+          <SelectValores
+            texto="Escolher Borda recheada"
+            options={[
+              { value: "CATUPIRY", label: "Sem Borda" },
+              { value: "CATUPIRY", label: "Catupiry" },
+            ]}
+            onChange={(event) => {
+              setBordaSelecionada(event.target.value);
+              console.log("Borda selecionada:", event.target.value); // Verifica o valor selecionado
+            }}
+          />
+
+          <Box>
+            {/* Botão para abrir o diálogo */}
+            <ButtonMaterialUi
+              texto={"selecionar bebida"}
+              bg={"#B72A23"}
+              onClick={() => setDialogBebidasOpen(true)}
+            />
+
+            {/* Diálogo de seleção de bebidas */}
+            <DialogoBebidas
+              open={dialogBebidasOpen}
+              onClose={() => setDialogBebidasOpen(false)}
+              bebidas={bebidas} // Passa as bebidas filtradas
+              onAdicionarBebida={handleAdicionarBebida}
+            />
+          </Box>
         </Box>
 
         <Box
@@ -474,7 +519,12 @@ export default function SectionPedidos() {
             texto={"Adicionar Ao Carrinho"}
             bg={"#B72A23"}
             onClick={adicionarPizzaAoPedido}
-            disabled={!saborEsquerda || !saborDireita}
+            disabled={
+              !tamanhoSelecionado || // Desabilitado se o tamanho não for selecionado
+              !bordaSelecionada || // Desabilitado se a borda não for selecionada
+              !saborEsquerda || // Desabilitado se a metade esquerda não for selecionada
+              !saborDireita // Desabilitado se a metade direita não for selecionada
+            }
           />
         </Box>
         <Box
@@ -655,48 +705,67 @@ export default function SectionPedidos() {
               gap: 2,
             }}
           >
-            {produtosFiltrados.length > 0 ? (
-              produtosFiltrados.map((produto) => (
-                <Box
-                  key={produto.id}
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    border: "1px solid #ddd",
-                    borderRadius: "4px",
-                    backgroundColor: "#fff",
-                    overflow: "hidden",
-                  }}
-                >
-                  <Box sx={{ flex: 1, maxWidth: "70%" }}>
+            {/* Renderiza os produtos da categoriaProduto PIZZA */}
+            {produtosFiltrados.some(
+              (produto) => produto.categoriaProduto === "PIZZA"
+            ) && (
+              <>
+                <Typography variant="h6" sx={{ marginBottom: "8px" }}>
+                  Pizzas Salgadas
+                </Typography>
+                {produtosFiltrados
+                  .filter((produto) => produto.categoriaProduto === "PIZZA")
+                  .map((produto) => (
                     <ItemListaDePedidos
+                      key={produto.id}
                       sabor={produto.nome}
                       texto={
                         produto.descricao || "Ingredientes não especificados"
                       }
                       preco={produto.preco.toFixed(2)}
+                      produto={produto}
+                      adicionarAoPedido={(produtoSelecionado) =>
+                        adicionarSaborMetade(produtoSelecionado)
+                      }
                     />
-                  </Box>
-                  <Box sx={{ p: 2 }}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => adicionarSaborMetade(produto)}
-                    >
-                      Selecionar
-                    </Button>
-                  </Box>
-                </Box>
-              ))
-            ) : (
-              <Typography sx={{ p: 2, textAlign: "center" }}>
-                Nenhuma pizza encontrada com "{searchTerm}"
-              </Typography>
+                  ))}
+              </>
+            )}
+
+            {/* Renderiza os produtos da categoriaProduto PIZZA_DOCE */}
+            {produtosFiltrados.some(
+              (produto) => produto.categoriaProduto === "PIZZA_DOCE"
+            ) && (
+              <>
+                <Typography
+                  variant="h6"
+                  sx={{ marginTop: "16px", marginBottom: "8px" }}
+                >
+                  Pizzas Doces
+                </Typography>
+                {produtosFiltrados
+                  .filter(
+                    (produto) => produto.categoriaProduto === "PIZZA_DOCE"
+                  )
+                  .map((produto) => (
+                    <ItemListaDePedidos
+                      key={produto.id}
+                      sabor={produto.nome}
+                      texto={
+                        produto.descricao || "Ingredientes não especificados"
+                      }
+                      preco={produto.preco.toFixed(2)}
+                      produto={produto}
+                      adicionarAoPedido={(produtoSelecionado) =>
+                        adicionarSaborMetade(produtoSelecionado)
+                      }
+                    />
+                  ))}
+              </>
             )}
           </Stack>
         </DialogContent>
+
         <DialogActions
           sx={{
             flexShrink: 0,
@@ -761,6 +830,8 @@ export default function SectionPedidos() {
             pizzasSelecionadas={pizzasSelecionadas} // Passa as pizzas selecionadas
             onSelecionarEndereco={handleSelecionarEndereco} // Redireciona ao selecionar
             idsPizzasSelecionadas={idsPizzasSelecionadas}
+            tamanhoSelecionado={tamanhoSelecionado} // Passa o tamanho selecionado
+            bordaSelecionada={bordaSelecionada} // Passa a borda selecionada
             onClose={() => setDialogEscolherEnderecoOpen(false)}
           />
         </DialogContent>

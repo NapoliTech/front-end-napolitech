@@ -82,7 +82,6 @@ export function Cadastro() {
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
         } else {
-
             const usuario = {
                 nome,
                 email,
@@ -93,20 +92,18 @@ export function Cadastro() {
                 telefone: "(11) 99999-9999" 
             };
 
-
             console.log("JSON DE USUARIO PARA O CADASTRO:", usuario);
             setErrors({});
-
 
             api.post('/api/cadastro', usuario)
                 .then((response) => {
                     console.log(response.data);
-                    
-                    navigate('/login');
+                    alert("Cadastro realizado com sucesso!"); // Exibe mensagem de sucesso
+                    navigate('/login'); // Redireciona para a página de login
                 })
                 .catch((error) => {
                     console.error("Erro ao cadastrar:", error);
-                    setErrors({ api: "Erro ao cadastrar. Tente novamente." });
+                    alert(error.response?.data?.message || "Erro ao cadastrar. Tente novamente."); // Exibe mensagem de erro
                 });
         }
     };
@@ -187,7 +184,6 @@ export function Cadastro() {
                             value={confirmarSenha}
                             onChange={handleConfirmarSenhaChange}
                         />
-
                     </div>
                 )}
                 <button type="button" className="btt" id="bttcontinuarCadastro" onClick={showParte2 ? handleSubmit : handleContinue}>

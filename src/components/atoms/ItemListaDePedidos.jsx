@@ -18,35 +18,41 @@ export default function ItemListaDePedidos({
   const handleSelecionar = () => {
     if (adicionarAoPedido && produto) {
       adicionarAoPedido(produto);
+      console.log(`Produto selecionado: ${produto.nome}`);
     }
   };
 
   return (
     <List
       sx={{
-        width: "100%", // Ajusta para ocupar 100% do espaço disponível no container pai
+        width: "100%",
         bgcolor: "background.paper",
       }}
       component="nav"
     >
-      <ListItemButton>
+      <ListItemButton
+        sx={{
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
         <ListItemIcon>
           <Acordeon sabor={sabor} preco={preco} texto={texto} />
         </ListItemIcon>
-        <ListItemText />
         {adicionarAoPedido && (
-          <Box sx={{ ml: 2 }}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleSelecionar}
-              sx={{
-                width: "100%", // Ajusta para ocupar 100% do espaço disponível no container pai
-              }}
-            >
-              Selecionar
-            </Button>
-          </Box>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSelecionar}
+            sx={{
+              padding: '8px',
+              marginLeft: "auto", 
+              width: 'auto',
+              height: 'auto'
+            }}
+          >
+            Selecionar
+          </Button>
         )}
       </ListItemButton>
     </List>

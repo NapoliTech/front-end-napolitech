@@ -1,15 +1,37 @@
 import React, { useState } from "react"; // Adicione o useState aqui
-import { Dialog, DialogTitle, DialogContent, Button, Box, Typography, Stack } from "@mui/material";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Button,
+  Box,
+  Typography,
+  Stack,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import CadastroEndereco from "./CadastroEndereco";
 
-export default function EscolherEndereco({ enderecos,  onClose, userId, pizzasSelecionadas, idsPizzasSelecionadas }) {
+export default function EscolherEndereco({
+  enderecos,
+  onClose,
+  userId,
+  pizzasSelecionadas,
+  idsPizzasSelecionadas,
+  tamanhoSelecionado,
+  bordaSelecionada,
+}) {
+  console.log("Tamanho selecionado:", tamanhoSelecionado);
+  console.log("Borda selecionada:", bordaSelecionada);
+
   const [mostrarCadastro, setMostrarCadastro] = useState(false); // Alterna entre lista e cadastro
   const navigate = useNavigate(); // Hook para redirecionamento
 
   const handleSelecionarEndereco = (endereco) => {
     console.log("Endereço selecionado:", endereco);
-    console.log("Pizzas selecionadas antes de redirecionar:", pizzasSelecionadas);
+    console.log(
+      "Pizzas selecionadas antes de redirecionar:",
+      pizzasSelecionadas
+    );
     console.log("IDs das pizzas selecionadas:", idsPizzasSelecionadas);
 
     // Redireciona para a página de finalizar pedido com os dados necessários
@@ -19,17 +41,14 @@ export default function EscolherEndereco({ enderecos,  onClose, userId, pizzasSe
         enderecoSelecionado: endereco,
         pizzasSelecionadas, // Passa as pizzas selecionadas
         idsPizzasSelecionadas, // Passa os IDs das pizzas selecionadas
+        tamanhoSelecionado, // Passa o tamanho selecionado
+        bordaSelecionada, // Passa a borda selecionada
       },
     });
   };
 
   return (
-    <Dialog
-      open={true}
-      onClose={onClose}
-      fullWidth
-      maxWidth="sm"
-    >
+    <Dialog open={true} onClose={onClose} fullWidth maxWidth="sm">
       <DialogTitle>
         {mostrarCadastro ? "Cadastrar Novo Endereço" : "Escolher Endereço"}
       </DialogTitle>
@@ -54,7 +73,8 @@ export default function EscolherEndereco({ enderecos,  onClose, userId, pizzasSe
                     }}
                   >
                     <Typography>
-                      {endereco.rua}, {endereco.numero} - {endereco.bairro}, {endereco.cidade} - {endereco.estado}
+                      {endereco.rua}, {endereco.numero} - {endereco.bairro},{" "}
+                      {endereco.cidade} - {endereco.estado}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
                       CEP: {endereco.cep}
