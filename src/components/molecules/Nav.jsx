@@ -3,11 +3,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ModalCarrinho from "./ModalCarrinho";
 import ModalSair from "./ModalSair";
+import ModalChatbot from "./ModalChatbot"; // Importe sua molécula do chatbot
 
 export default function Nav({ backgroundColor, padding, position, left }) {
   const navigate = useNavigate();
   const [carrinhoAberto, setCarrinhoAberto] = useState(false);
   const [modalSairAberto, setModalSairAberto] = useState(false);
+  const [modalChatbotAberto, setModalChatbotAberto] = useState(false);
   const [itensCarrinho, setItensCarrinho] = useState(
     JSON.parse(localStorage.getItem("itensCarrinho") || "[]")
   );
@@ -26,8 +28,6 @@ export default function Nav({ backgroundColor, padding, position, left }) {
     navigate("/");
     window.location.reload();
   };
-
-  console.log(localStorage.getItem("token"));
 
   return (
     <>
@@ -55,7 +55,7 @@ export default function Nav({ backgroundColor, padding, position, left }) {
           }}
         >
           <a
-            onClick={() => navigate("/")}
+            onClick={() => setModalChatbotAberto(true)}
             style={{ color: "#FFF", textDecoration: "none", cursor: "pointer" }}
           >
             Cardapio
@@ -124,13 +124,18 @@ export default function Nav({ backgroundColor, padding, position, left }) {
         </Box>
       </Box>
 
+      <ModalChatbot
+        aberto={modalChatbotAberto}
+        fecharModal={() => setModalChatbotAberto(false)}
+      />
+
       <ModalCarrinho
         aberto={carrinhoAberto}
         fecharModal={() => {
           setCarrinhoAberto(false);
           atualizarCarrinho();
         }}
-        token={token} // Passe o token como prop
+        token={token}
         atualizarCarrinho={atualizarCarrinho}
       />
 

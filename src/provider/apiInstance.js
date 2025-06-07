@@ -16,3 +16,7 @@ api.interceptors.request.use(
       return Promise.reject(error);
   }
 );
+
+export const apiChatBot = axios.create({
+  baseURL: import.meta.env.VITE_ENDERECO_CHAT,
+});
