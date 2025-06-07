@@ -169,7 +169,7 @@ html, body {
 
 .formularios {
     position: absolute;
-    top: 65%;
+    top: 50%;
     right: 16%;
     transform: translateY(-50%);
     background-color: rgba(255, 255, 255, 0.9);
@@ -178,7 +178,7 @@ html, body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 450px;
     max-width: 90%;
-    height: 100%;
+    height: auto;
     color: var(--primary-color);
     display: flex;
     flex-direction: column;
@@ -327,15 +327,6 @@ button, .text {
     width: 100%;
     height: 33px;
     border-radius: 2px;
-}
-
-.carroselLogin {
-    /* position: absolute;
-    top: 0;
-    left: 0; */
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
 }
 
 

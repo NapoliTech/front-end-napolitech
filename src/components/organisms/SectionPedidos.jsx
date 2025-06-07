@@ -32,7 +32,7 @@ import CadastroEndereco from "../molecules/CadastroEndereco";
 import EscolherEndereco from "../molecules/EscolherEndereco";
 import { useNavigate } from "react-router-dom";
 import DialogoBebidas from "../molecules/DialogoBebidas";
-
+import ModalNaoAutenticado from "../molecules/ModalNaoAutenticado";
 export default function SectionPedidos() {
   const [tooltipOpen, setTooltipOpen] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -54,12 +54,7 @@ export default function SectionPedidos() {
   const [bordaSelecionada, setBordaSelecionada] = useState(""); // Estado para a borda
   const [dialogBebidasOpen, setDialogBebidasOpen] = useState(false);
   const [bebidas, setBebidas] = useState([]);
-
-  const bebidasMock = [
-    { id: 1, nome: "Coca-Cola", preco: 5.99 },
-    { id: 2, nome: "Guaraná", preco: 4.99 },
-    { id: 3, nome: "Água Mineral", preco: 2.99 },
-  ];
+  const [modalNaoAutenticado, setModalNaoAutenticado] = useState(false);
 
   const handleAdicionarBebida = (bebida) => {
     console.log("Bebida adicionada:", bebida);
@@ -92,7 +87,7 @@ export default function SectionPedidos() {
 
         // Filtra apenas os produtos com categoriaProduto = "REFRIGERANTE"
         const bebidasFiltradas = response.data.filter(
-          (produto) => produto.categoriaProduto === "REFRIGERANTE"
+          (produto) => produto.categoriaProduto === "BEBIDAS"
         );
         setBebidas(bebidasFiltradas);
       } else {
@@ -108,7 +103,7 @@ export default function SectionPedidos() {
   const gerarTokerDescrip = () => {
     const token = localStorage.getItem("token"); // Obtém o token do localStorage
     if (!token) {
-      alert("Usuário não autenticado. Faça login para continuar.");
+      setModalNaoAutenticado(true);
       return null; // Retorna null se o token não existir
     }
 
@@ -317,6 +312,13 @@ export default function SectionPedidos() {
         overflowY: "hidden",
       }}
     >
+      <ModalNaoAutenticado
+        aberto={modalNaoAutenticado}
+        onOk={() => {
+          setModalNaoAutenticado(false);
+          navigate("/login");
+        }}
+      />
       <Stack
         direction={{ xs: "column", sm: "row" }}
         spacing={{ xs: 1, sm: 2, md: 4 }}

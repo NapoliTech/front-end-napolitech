@@ -7,7 +7,7 @@ import { Carrossel } from "./Carrossel";
 import Button from "@mui/material/Button";
 import { TituloH2 } from "../atoms/TituloH2";
 import Nav from "../molecules/Nav";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 export default function HeaderMUI() {
   const navigate = useNavigate();
   const images = [

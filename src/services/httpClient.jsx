@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// eslint-disable-next-line no-undef
-const backendUrl = process.env.VITE_ENDERECO_API;
+// Use import.meta.env para Vite
+const backendUrl = import.meta.env.VITE_ENDERECO_API;
 
 const httpClient = axios.create({
   baseURL: backendUrl,

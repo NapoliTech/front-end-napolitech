@@ -79,7 +79,7 @@ export default function FinalizarPedido() {
     const payload = {
       clienteId: userId,
       itens: pizzasSelecionadas.map((pizza) => ({
-        produto: pizza.metades.map((metade) => metade.id), // IDs das duas metades
+        produto: pizza.metades.map((metade) => metade.id),
         quantidade: 1,
         bordaRecheada: bordaSelecionada,
         tamanhoPizza: tamanhoSelecionado 

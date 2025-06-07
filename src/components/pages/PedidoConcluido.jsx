@@ -69,9 +69,13 @@ export default function PedidoConcluido() {
             {pedido.itens.map((item, index) => (
               <Box component="li" key={index} sx={{ marginBottom: "8px" }}>
                 <Typography variant="body2">
-                  <strong>Produto:</strong> {item.produto.join(", ")} <br />
+                  <strong>Produto:</strong>{" "}
+                  {Array.isArray(item.produto)
+                    ? item.produto.join(", ")
+                    : item.produto}
+                  <br />
                   <strong>Quantidade:</strong> {item.quantidade} <br />
-                  <strong>Borda Recheada:</strong> {item.bordaRecheada} <br />
+                  <strong>Borda Recheada:</strong> {item.bordaRecheada || "Sem borda recheada"} <br />
                   <strong>Tamanho:</strong> {item.tamanhoPizza}
                 </Typography>
               </Box>

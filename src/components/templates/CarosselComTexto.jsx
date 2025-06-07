@@ -1,6 +1,7 @@
 import React from "react";
 import { Carrossel } from "../organisms/Carrossel";
 import { TextBonari } from "../organisms/TextBonari";
+import { Box } from "@mui/material";
 
 export function CarosselComTexto({ children }) {
   const images = [
@@ -10,11 +11,11 @@ export function CarosselComTexto({ children }) {
   ];
 
   return (
-    <>
+    <Box sx={{overflow: 'hidden'}}>
       <Carrossel images={images} />
 
       <TextBonari />
       {children}
-    </>
+    </Box>
   );
 }

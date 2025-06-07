@@ -31,7 +31,7 @@ export function Carrossel({ images }) {
   }, []);
 
   return (
-    <section className="carroselLogin" id="carroselLogin">
+    <section className="carroselLogin" id="carroselLogin" style={{overflowY: 'hidden'}}>
       <div className="carroselImgs">
         {images.map((image, index) => (
           <ImageCard
