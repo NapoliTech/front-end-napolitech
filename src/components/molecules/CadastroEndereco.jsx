@@ -15,7 +15,7 @@ import axios from "axios";
 import { api } from "../../provider/apiInstance";
 
 
-export default function CadastroEndereco({ userId }) {
+export default function CadastroEndereco({ userId, onEnderecoCadastrado }) {
   const [formData, setFormData] = useState({
     cep: "",
     rua: "",
@@ -178,6 +178,11 @@ export default function CadastroEndereco({ userId }) {
         cidade: "",
         estado: "",
       });
+
+      // Chama a função para fechar e abrir o próximo modal
+      if (onEnderecoCadastrado) {
+        onEnderecoCadastrado();
+      }
     } catch (err) {
       console.error("Erro ao enviar os dados:", err);
       setError(err.response?.data?.message || "Ocorreu um erro ao cadastrar o endereço.");

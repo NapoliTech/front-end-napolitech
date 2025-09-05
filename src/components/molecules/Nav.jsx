@@ -1,12 +1,13 @@
 import { Box } from "@mui/material";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import ModalCarrinho from "./ModalCarrinho";
 import ModalSair from "./ModalSair";
 import ModalChatbot from "./ModalChatbot"; // Importe sua molécula do chatbot
 
 export default function Nav({ backgroundColor, padding, position, left }) {
   const navigate = useNavigate();
+  const location = useLocation(); // Adicione esta linha
   const [carrinhoAberto, setCarrinhoAberto] = useState(false);
   const [modalSairAberto, setModalSairAberto] = useState(false);
   const [modalChatbotAberto, setModalChatbotAberto] = useState(false);
@@ -78,10 +79,13 @@ export default function Nav({ backgroundColor, padding, position, left }) {
           <img
             src="/img/logo_bonari.png"
             alt=""
-            style={{
+            style={
+              {
               width: "auto",
-              height: "100px",
-            }}
+              height: location.pathname === "/" ? "200px" : "100px", // Altura condicional
+              paddingRight: "50px"
+            }
+          }
           />
         </Box>
         {/* Direita: Sair/Cadastrar e Carrinho */}

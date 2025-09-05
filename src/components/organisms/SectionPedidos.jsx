@@ -301,6 +301,21 @@ export default function SectionPedidos() {
       .toFixed(2);
   };
 
+  // Função para ser chamada após cadastro de endereço
+  const handleEnderecoCadastrado = async () => {
+    setDialogEnderecoOpen(false);
+    // Atualize os endereços do usuário após cadastro
+    try {
+      const response = await api.get(`/api/enderecos/${userId}`);
+      if (response.data && response.data.endereco) {
+        setEnderecos([response.data.endereco]);
+      }
+    } catch (error) {
+      // Trate erro se necessário
+    }
+    setDialogEscolherEnderecoOpen(true);
+  };
+
   return (
     <Box
       component="section"
@@ -803,7 +818,12 @@ export default function SectionPedidos() {
             overflowY: "auto",
           }}
         >
-          {userId && <CadastroEndereco userId={userId} />}
+          {userId && (
+            <CadastroEndereco
+              userId={userId}
+              onEnderecoCadastrado={handleEnderecoCadastrado} // Passe a função aqui
+            />
+          )}
         </DialogContent>
       </Dialog>
       <Box

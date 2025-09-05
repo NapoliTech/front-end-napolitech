@@ -15,8 +15,6 @@ export default function HeaderMUI() {
     { src: "/img/bg-pizzaMesa.jpg", alt: "Background bem vindo" },
   ];
 
-  // Função para listar músicas
-
   return (
     <header
       style={{
