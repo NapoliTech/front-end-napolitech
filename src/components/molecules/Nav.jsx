@@ -83,7 +83,7 @@ export default function Nav({ backgroundColor, padding, position, left }) {
               {
               width: "auto",
               height: location.pathname === "/" ? "200px" : "100px", // Altura condicional
-              paddingRight: "50px"
+              paddingRight: location.pathname === "/" ? "0" : "50px",
             }
           }
           />
@@ -108,16 +108,28 @@ export default function Nav({ backgroundColor, padding, position, left }) {
               Sair
             </a>
           ) : (
-            <a
-              onClick={() => navigate("/Cadastro")}
-              style={{
-                color: "#FFF",
-                textDecoration: "none",
-                cursor: "pointer",
-              }}
-            >
-              Cadastrar
-            </a>
+            <>
+              <a
+                onClick={() => navigate("/Cadastro")}
+                style={{
+                  color: "#FFF",
+                  textDecoration: "none",
+                  cursor: "pointer",
+                }}
+              >
+                Cadastrar
+              </a>
+              <a
+                onClick={() => navigate("/login")}
+                style={{
+                  color: "#FFF",
+                  textDecoration: "none",
+                  cursor: "pointer",
+                }}
+              >
+                Login
+              </a>
+            </>
           )}
           <a
             onClick={() => setCarrinhoAberto(true)}

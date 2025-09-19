@@ -5,7 +5,7 @@ export default function NavPedidos() {
   return (
     <Nav
       backgroundColor={"#B72A23"}
-      padding={"0px"}
+      padding={"16px"}
       // height={"60px"}
     />
   );
